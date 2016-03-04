@@ -1,0 +1,23 @@
+apply plugin: 'application'
+apply plugin: 'distribution'
+
+mainClassName = "de.yvka.shadersloth.ShaderSlothJavaFx"
+applicationDefaultJvmArgs = ["-DShaderSlothDir=."]
+
+run {
+    standardInput = System.in
+}
+
+
+distributions {
+    main {
+        contents {
+            from fileTree("$projectDir") {
+                include "assets/**"
+            }
+            from "README.md"
+            from "LICENSE"
+        }
+    }
+}
+
