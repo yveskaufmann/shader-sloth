@@ -1,0 +1,50 @@
+group 'de.yvka'
+description 'A application which allows you to develop glsl shaders interactivly '
+version '1.0'
+
+ext {
+    jdkVersion = "1.8"
+}
+
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply from: 'gradle/ide.gradle'
+
+sourceCompatibility = "$jdkVersion"
+targetCompatibility = "$jdkVersion"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
+dependencies {
+    compile "de.yvka:sloth-engine:1.0"
+    compile "org.fxmisc.richtext:richtextfx:0.6.10"
+    compile "org.fxmisc.flowless:flowless:0.4.7"
+    compile "org.fxmisc.undo:undofx:1.2"
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:1.10.19"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId 'shader-sloth'
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion '2.4'
+}

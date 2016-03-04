@@ -1,0 +1,19 @@
+.text {
+    -fx-fill: #BABABA;
+}
+
+.type {
+    -fx-fill: teal;
+    -fx-font-weight: bold;
+}
+
+.code-area {
+    -fx-font-family: monospace;
+    -fx-background-color: #2C2C2C;
+}
+
+.caret {
+    -fx-stroke: BABABA;
+}
+
+
