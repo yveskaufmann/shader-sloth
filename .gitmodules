@@ -1,0 +1,3 @@
+[submodule "sloth-engine"]
+	path = sloth-engine
+	url = git@github.com:yveskaufmann/sloth-engine.git

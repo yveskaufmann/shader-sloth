@@ -1,1 +1,3 @@
+include ":sloth-engine"
 rootProject.name = 'shader-sloth'
+
