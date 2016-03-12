@@ -1,6 +1,7 @@
 package de.yvka.shadersloth.controls.number;
 
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
+import de.yvka.shadersloth.controls.NumberInput;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
@@ -29,6 +30,10 @@ public class NumberInputSkin extends BehaviorSkinBase<NumberInput, NumberInputBe
 	private NumberFormat numberFormat;
 	private TextField textField;
 	private Label label;
+
+	public NumberInputSkin() {
+		super(null, new NumberInputBehaviour(null));
+	}
 
 	/**
 	 * Constructor for all SkinBase instances.
@@ -146,8 +151,8 @@ public class NumberInputSkin extends BehaviorSkinBase<NumberInput, NumberInputBe
 		}
 	}
 	public void showValue(Double newValue) {
-		newValue = (newValue < getSkinnable().getMinValue()) ? getSkinnable().getMinValue() : newValue;
-		newValue = newValue > getSkinnable().getMaxValue() ? getSkinnable().getMaxValue() : newValue;
+		newValue = Math.max(newValue, getSkinnable().getMinValue());
+		newValue = Math.min(newValue, getSkinnable().getMaxValue());
 		formatter.setValue(newValue);
 	}
 

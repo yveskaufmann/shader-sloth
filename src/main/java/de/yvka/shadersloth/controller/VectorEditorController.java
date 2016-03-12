@@ -56,7 +56,7 @@ public class VectorEditorController implements Initializable {
 
 	public static Pane getView() {
 		try {
-			URL viewURL = VectorEditorController.class.getResource("../view/VectorEditorView.fxml");
+			URL viewURL = VectorEditorController.class.getResource("../view/vectorEditorView.fxml");
 			FXMLLoader loader = new FXMLLoader(viewURL);
 			loader.setController(new VectorEditorController());
 			return loader.load();

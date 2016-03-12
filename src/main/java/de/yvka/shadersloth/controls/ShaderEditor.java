@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GLSLEditor extends CodeArea {
+public class ShaderEditor extends CodeArea {
 
 	private static final String EXAMPLE_CODE = "#version 130\n" +
 		"\n" +
@@ -38,10 +38,10 @@ public class GLSLEditor extends CodeArea {
 	private static final int TYPE_GROUP = 1 ;
 
 	{
-		getStylesheets().add(GLSLEditor.class.getResource("glsl-highlighting.css").toExternalForm());
+		getStylesheets().add(ShaderEditor.class.getResource("glsl-highlighting.css").toExternalForm());
 	}
 
-	public GLSLEditor() {
+	public ShaderEditor() {
 		super();
 		setParagraphGraphicFactory(LineNumberFactory.get(this));
 		textProperty().addListener((obs, oldText, newText) -> {
@@ -49,7 +49,7 @@ public class GLSLEditor extends CodeArea {
 		});
 	}
 
-	public GLSLEditor(String text) {
+	public ShaderEditor(String text) {
 		this();
 		replaceText(0, 0, text);
 		getUndoManager().forgetHistory();

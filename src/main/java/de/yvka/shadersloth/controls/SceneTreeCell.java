@@ -1,9 +1,7 @@
 package de.yvka.shadersloth.controls;
 
-import de.yvka.slothengine.geometry.Mesh;
 import de.yvka.slothengine.scene.Geometry;
 import de.yvka.slothengine.scene.Node;
-import de.yvka.slothengine.scene.Scene;
 import de.yvka.slothengine.scene.light.Light;
 import javafx.scene.control.TreeCell;
 import javafx.scene.image.Image;

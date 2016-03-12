@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import de.yvka.shadersloth.controls.*?>
+
+<TreeView fx:id="sceneTree" maxHeight="250" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />

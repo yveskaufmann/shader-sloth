@@ -2,10 +2,15 @@ package de.yvka.shadersloth.controls.number;
 
 import com.sun.javafx.scene.control.behavior.BehaviorBase;
 import com.sun.javafx.scene.control.behavior.TwoLevelFocusBehavior;
+import de.yvka.shadersloth.controls.NumberInput;
 
 public class NumberInputBehaviour extends BehaviorBase<NumberInput>{
 
 	private TwoLevelFocusBehavior tlFocus;
+
+	public NumberInputBehaviour() {
+		super(null ,TRAVERSAL_BINDINGS);
+	}
 
 	/**
 	 * Create a new BehaviorBase for the given control. The Control must not
@@ -14,7 +19,6 @@ public class NumberInputBehaviour extends BehaviorBase<NumberInput>{
 	 * @param control     The control. Must not be null.
 	 */
 	public NumberInputBehaviour(NumberInput control) {
-
 		super(control, TRAVERSAL_BINDINGS);
 
 		if (com.sun.javafx.scene.control.skin.Utils.isTwoLevelFocus()) {

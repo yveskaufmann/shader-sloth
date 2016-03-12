@@ -1,12 +1,14 @@
-package de.yvka.shadersloth.controls.number;
+package de.yvka.shadersloth.controls;
 
+import de.yvka.shadersloth.controls.number.NumberInputSkin;
 import javafx.beans.property.*;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
+import javafx.scene.control.TextField;
 
 import java.text.NumberFormat;
 
-public class NumberInput extends Control {
+public class NumberInput extends TextField {
 
 	public static final String DEFAULT_STYLE_CLASS = "numberInput";
 
@@ -76,7 +78,7 @@ public class NumberInput extends Control {
 	private DoubleProperty minValue;
 	public DoubleProperty minValueProperty() {
 		if (minValue == null) {
-			minValue = new DoublePropertyBase(Double.MIN_VALUE) {
+			minValue = new DoublePropertyBase(Double.NEGATIVE_INFINITY) {
 				@Override
 				public Object getBean() {
 					return NumberInput.this;
@@ -141,7 +143,7 @@ public class NumberInput extends Control {
 		return label == null ? "" : label.get();
 	}
 
-	StringProperty labelProperty() {
+	public StringProperty labelProperty() {
 		if (label == null) {
 			label = new StringPropertyBase("") {
 				@Override
@@ -192,6 +194,6 @@ public class NumberInput extends Control {
 
 	@Override
 	public String getUserAgentStylesheet() {
-		return NumberInput.class.getResource("../number-control.css").toExternalForm();
+		return NumberInput.class.getResource("number-control.css").toExternalForm();
 	}
 }

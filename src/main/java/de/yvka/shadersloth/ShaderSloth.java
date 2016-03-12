@@ -3,18 +3,15 @@ package de.yvka.shadersloth;
 import de.yvka.slothengine.engine.AppSettings;
 import de.yvka.slothengine.engine.Engine;
 import de.yvka.slothengine.engine.EngineApp;
-import de.yvka.slothengine.geometry.Mesh;
-import de.yvka.slothengine.geometry.MeshRepository;
 import de.yvka.slothengine.geometry.primitives.Cube;
 import de.yvka.slothengine.geometry.primitives.Sphere;
 import de.yvka.slothengine.input.InputListener;
 import de.yvka.slothengine.input.event.KeyEvent;
 import de.yvka.slothengine.input.event.MouseEvent;
 import de.yvka.slothengine.material.Pass;
-import de.yvka.slothengine.scene.light.LightList;
+import de.yvka.slothengine.scene.Scene;
 import de.yvka.slothengine.scene.light.PointLight;
 import de.yvka.slothengine.material.BasicMaterial;
-import de.yvka.slothengine.material.Material;
 import de.yvka.slothengine.math.Color;
 import de.yvka.slothengine.renderer.FPSCounter;
 import de.yvka.slothengine.renderer.RenderState;
@@ -25,6 +22,7 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import static de.yvka.slothengine.renderer.RenderState.CullFaceMode;
 
@@ -35,6 +33,11 @@ public class ShaderSloth extends EngineApp implements InputListener {
 	List<Geometry> boxes = new ArrayList<>();
 	private float rotX = 0.0f;
 	private Geometry room;
+	private Consumer<Scene> onStartedCallback;
+
+	public void setOnStartedCallback(Consumer<Scene> onStartedCallback) {
+		this.onStartedCallback = onStartedCallback;
+	}
 
 	@Override
 	protected void prepare() {
@@ -107,6 +110,9 @@ public class ShaderSloth extends EngineApp implements InputListener {
 		point2.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		point2.setAttenuation(20.0f);
 		// scene.add(point2);
+		if (onStartedCallback != null) {
+			onStartedCallback.accept(scene);
+		}
 	}
 
 	@Override

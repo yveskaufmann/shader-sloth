@@ -2,30 +2,19 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
+<?import de.yvka.shadersloth.controls.NumberInput?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="201.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="22.0" prefWidth="200.0">
-         <children>
-            <ToggleButton fx:id="toggleAmbient" mnemonicParsing="false" text="Ambient" textOverrun="CLIP" />
-            <ToggleButton fx:id="togglePoint" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Point" textOverrun="CLIP" />
-            <ToggleButton fx:id="toggleDirect" layoutX="83.0" layoutY="10.0" mnemonicParsing="false" text="Direction" textOverrun="CLIP">
-               <HBox.margin>
-                  <Insets bottom="10.0" />
-               </HBox.margin>
-            </ToggleButton>
-         </children>
-      </HBox>
+      <TextField fx:id="lightId" promptText="Light Id" />
       <GridPane>
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
@@ -34,6 +23,7 @@
             <TextField prefHeight="25.0" prefWidth="160.0" promptText="Name" GridPane.columnSpan="2147483647" />
             <CheckBox mnemonicParsing="false" text="Diffuse" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <CheckBox mnemonicParsing="false" text="Specular" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="lightTypeChoice" prefHeight="25.0" prefWidth="2165.0" GridPane.columnSpan="2" />
          </children>
       </GridPane>
       <GridPane>
@@ -62,13 +52,13 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField promptText="X" GridPane.rowIndex="1" />
-            <TextField text="Z" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <NumberInput fx:id="xPosition" promptText="X" GridPane.rowIndex="1" />
+            <NumberInput fx:id="yPosition" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <NumberInput fx:id="zPosition" promptText="Z" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
-            </TextField>
+            </NumberInput>
             <Label text="Position" />
          </children>
       </GridPane>

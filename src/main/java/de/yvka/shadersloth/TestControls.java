@@ -2,11 +2,9 @@ package de.yvka.shadersloth;
 
 import de.yvka.slothengine.engine.AppSettings;
 import de.yvka.slothengine.engine.Engine;
-import de.yvka.slothengine.geometry.Mesh;
 import de.yvka.slothengine.scene.Geometry;
 import de.yvka.slothengine.scene.Node;
 import de.yvka.slothengine.scene.light.AmbientLight;
-import de.yvka.slothengine.scene.light.Light;
 import de.yvka.shadersloth.controls.SceneTreeCell;
 import de.yvka.shadersloth.dialog.GeometryCreateDialog;
 import javafx.application.Application;
@@ -24,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import de.yvka.shadersloth.controls.number.NumberInput;
+import de.yvka.shadersloth.controls.NumberInput;
 
 public class TestControls extends Application {
 
@@ -79,8 +77,6 @@ public class TestControls extends Application {
 		treeView.setContextMenu(contextMenu);
 
 		treeView.setCellFactory(new Callback<TreeView<Node>, TreeCell<Node>>() {
-
-
 
 			@Override
 			public TreeCell<Node> call(TreeView<Node> param) {

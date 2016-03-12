@@ -1,6 +1,7 @@
 package de.yvka.shadersloth.dialog;
 
 import de.yvka.slothengine.scene.Geometry;
+import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -25,7 +26,7 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 	private final FileChooser modelChooser = new FileChooser();
 	private ChoiceBox<String> modelTypeChoice;
 	private TextField geometryId;
-	private GridPane modelKindEditor;
+	private GridPane rootGrid;
 
 	public GeometryCreateDialog() {
 		super();
@@ -42,30 +43,45 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 		okButton.setDisable(true);
 
 		geometryId = new TextField();
+		geometryId.setPromptText("Geomerty Id");
+		geometryId.setTooltip(new Tooltip("The Identifier for this geometry"));
+
 		modelTypeChoice = new ChoiceBox<>();
 		modelTypeChoice.setMaxWidth(Double.MAX_VALUE);
 		modelTypeChoice.setItems(FXCollections.observableArrayList(KIND_CUBE, KIND_SPHERE, KIND_OBJECT_FILE));
 
-		modelKindEditor =  new GridPane();
-		modelKindEditor.setHgap(10);
-		modelKindEditor.setVgap(10);
-		modelKindEditor.setGridLinesVisible(true);
+		ColumnConstraints col1 = new ColumnConstraints();
+		col1.setHalignment(HPos.RIGHT);
+		col1.setMinWidth(50);
+		col1.setPercentWidth(15);
+		ColumnConstraints col2 = new ColumnConstraints();
+		col2.setHalignment(HPos.LEFT);
+		col2.setPercentWidth(80);
+		col2.setFillWidth(true);
+		ColumnConstraints col3 = new ColumnConstraints();
+		col3.setHalignment(HPos.LEFT);
+		col3.setPercentWidth(5);
 
-		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.CENTER);
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(20, 150, 10, 10));
-		grid.add(new Label("Id:"), 0, 0);
-		grid.add(geometryId, 1, 0);
-		grid.add(new Label("Kind:"), 0, 1);
-		grid.add(modelTypeChoice, 1, 1);
-		grid.add(modelKindEditor, 0, 2, 3, 1);
+
+
+		rootGrid = new GridPane();
+		rootGrid.getColumnConstraints().addAll(col1, col2, col3);
+		rootGrid.setAlignment(Pos.CENTER);
+		rootGrid.setHgap(5);
+		rootGrid.setVgap(5);
+		rootGrid.setPadding(new Insets(20, 150, 10, 10));
+		rootGrid.add(new Label("Id:"), 0, 0);
+		rootGrid.add(geometryId, 1, 0);
+		rootGrid.add(new Label("Kind:"), 0, 1);
+		rootGrid.add(modelTypeChoice, 1, 1);
 
 
 		modelTypeChoice.valueProperty().addListener((observable, oldValue, newValue) -> {
-			modelKindEditor.getChildren().clear();
-			modelKindEditor.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+			if (rootGrid.getChildren().size() > 4) {
+				rootGrid.getChildren().remove(4, rootGrid.getChildren().size());
+			}
+
 			switch (newValue) {
 				case KIND_CUBE: createCubeEditor(); break;
 				case KIND_SPHERE:  createSphereEditor();break;
@@ -74,12 +90,12 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 			getDialogPane().requestFocus();
         });
 
-		getDialogPane().setContent(grid);
-		getDialogPane().requestLayout();
+		getDialogPane().setContent(rootGrid);
+		getDialogPane().layout();
 	}
 
-	private Node createObjectFileEditor() {
-
+	private void createObjectFileEditor() {
+		BorderStroke borderStroke = new BorderStroke(Color.RED, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT);
 		TextField filePath = new TextField();
 		Button fileChooserButton = new Button("...");
 		fileChooserButton.setOnAction((event) -> {
@@ -94,20 +110,17 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 			chooser.showOpenDialog(null);
 		});
 
-		modelKindEditor.add(new Label("File"), 0, 1);
-		modelKindEditor.add(filePath, 1, 1);
-		modelKindEditor.add(fileChooserButton, 2, 1);
+		rootGrid.add(new Label("File:"), 0, 2);
+		rootGrid.add(filePath, 1, 2);
+		rootGrid.add(fileChooserButton, 2, 2);
 
-		return modelKindEditor;
 	}
 
-	private Node createSphereEditor() {
-		return null;
+	private void createSphereEditor() {
 	}
 
 
-	private Node createCubeEditor() {
-		return null;
+	private void createCubeEditor() {
 	}
 
 
