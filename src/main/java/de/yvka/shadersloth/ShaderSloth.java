@@ -44,7 +44,6 @@ public class ShaderSloth extends EngineApp implements InputListener {
 
 		zoomLevel = 1.0f;
 
-		Engine.register(new FPSCounter());
 		inputManager.addListener(this);
 
 		Random rnd = new Random();
@@ -162,7 +161,7 @@ public class ShaderSloth extends EngineApp implements InputListener {
 	 * Run the de.yvka.slothengine.renderer without offscreen support, exists only for
 	 * development and debugging purposes.
 	 *
-	 * @param args
+	 * @param args program arguments
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
