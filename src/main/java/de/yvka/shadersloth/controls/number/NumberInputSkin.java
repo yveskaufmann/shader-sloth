@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
 import java.awt.*;
@@ -54,21 +56,19 @@ public class NumberInputSkin extends BehaviorSkinBase<NumberInput, NumberInputBe
 	private void initialize() {
 
 		getSkinnable().setFocusTraversable(false);
-		HBox hLayout = new HBox();
-		hLayout.setPadding(new Insets(10));
-		hLayout.setSpacing(10);
-		hLayout.setAlignment(Pos.BASELINE_LEFT);
+		VBox hLayout = new VBox();
 		hLayout.setCursor(Cursor.H_RESIZE);
 		hLayout.setFocusTraversable(false);
 
 		textField = new TextField();
-		textField.setMinWidth(100);
-		textField.setPrefWidth(500);
-		textField.setMaxWidth(1000);
+		textField.setMinWidth(50);
+		textField.setMaxWidth(150);
 		textField.setText(Double.toString(getSkinnable().getValue()));
 
 		label = new Label();
+		label.setAlignment(Pos.CENTER_LEFT);
 		label.setLabelFor(textField);
+		label.setPadding(new Insets(0, 0, 0, 3));
 
 		setUpTextFormatter();
 		textField.setTextFormatter(formatter);
@@ -86,7 +86,7 @@ public class NumberInputSkin extends BehaviorSkinBase<NumberInput, NumberInputBe
 
 	}
 
-	private void eventHandling(final HBox hLayout) {
+	private void eventHandling(final Pane hLayout) {
 
 		hLayout.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
 
@@ -157,6 +157,8 @@ public class NumberInputSkin extends BehaviorSkinBase<NumberInput, NumberInputBe
 	}
 
 	public void showLabel(String labelText) {
-		label.setText(labelText);
+		if (!"".equals(labelText.trim())) {
+			label.setText(labelText + ":");
+		}
 	}
 }

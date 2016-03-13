@@ -34,43 +34,54 @@
       </VBox>
    </top>
    <center>
-      <SplitPane dividerPositions="0.7847919655667145" orientation="VERTICAL" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.8573388203017832" orientation="VERTICAL" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
-            <SplitPane dividerPositions="0.20156555772994128, 0.5469667318982387" prefHeight="194.0" prefWidth="1022.0">
+            <SplitPane dividerPositions="0.20156555772994128, 0.5469667318982387" prefHeight="194.0" prefWidth="1022.0" SplitPane.resizableWithParent="false">
               <items>
-                  <VBox maxWidth="300.0" prefWidth="300.0">
-                     <children>
-                         <TitledPane fx:id="sceneTreeRoot" prefWidth="300.0" text="%scene.tree.title"/>
-                         <TitledPane fx:id="editorRoot" prefWidth="300.0" animated="false" text="%editor.title" />
-                         <TitledPane fx:id="materialEditorRoot" prefWidth="300.0" animated="false" text="%material.title" />
-                     </children>
-                  </VBox>
+                  <TabPane maxWidth="300.0" minWidth="30.0" prefWidth="200" side="LEFT" tabClosingPolicy="UNAVAILABLE" SplitPane.resizableWithParent="false">
+                    <tabs>
+                      <Tab fx:id="sceneTab" closable="false" text="%scene.title">
+                           <content>
+                            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+                               <content>
+                                 <VBox VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <TitledPane fx:id="sceneTreeRoot" collapsible="false" maxWidth="1.7976931348623157E308" style="-fx-background-insets: 0; -fx-border-color: transparent;" text="%scene.tree.title" />
+                                        <TitledPane fx:id="editorRoot" animated="false" collapsible="false" maxWidth="1.7976931348623157E308" text="%editor.title" />
+                                    </children>
+                                 </VBox>
+                               </content>
+                            </ScrollPane>
+                           </content>
+                        </Tab>
+                      <Tab id="materialTab" fx:id="materialTab" closable="false" text="%material.title">
+                        <content>
+                            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+                               <content>
+                                   <VBox>
+                                       <children>
+                                           <TitledPane fx:id="materialEditorRoot" animated="false" collapsible="false" maxWidth="1.7976931348623157E308" text="%material.title" />
+                                       </children>
+                                   </VBox>
+                               </content>
+                            </ScrollPane>
+                        </content>
+                     </Tab>
+                    </tabs>
+                  </TabPane>
                   <SplitPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
                      <items>
-                        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS">
-                          <tabs>
-                            <Tab text="Untitled Tab 1">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                              </content>
-                            </Tab>
-                            <Tab text="Untitled Tab 2">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                              </content>
-                            </Tab>
-                          </tabs>
-                        </TabPane>
+                        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS" SplitPane.resizableWithParent="false" />
                      </items>
                   </SplitPane>
-                  <AnchorPane fx:id="renderViewRoot" minHeight="256" minWidth="256" prefHeight="512" prefWidth="512">
+                  <AnchorPane fx:id="renderViewRoot" minHeight="256" minWidth="256" prefHeight="512" prefWidth="512" SplitPane.resizableWithParent="false">
                      <children>
-                        <ImageView fx:id="renderView" fitHeight="512.0" fitWidth="512.0" preserveRatio="false" scaleY="-1.0" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ImageView fx:id="renderView" fitHeight="480.0" fitWidth="640.0" preserveRatio="true" scaleY="-1.0" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
               </items>
             </SplitPane>
-            <TabPane prefHeight="200.0" prefWidth="200.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE">
+            <TabPane maxHeight="100.0" minHeight="0.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" visible="false" SplitPane.resizableWithParent="false">
               <tabs>
                 <Tab text="Untitled Tab 1">
                   <content>

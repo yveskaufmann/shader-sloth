@@ -13,6 +13,7 @@ import de.yvka.slothengine.scene.Geometry;
 import de.yvka.slothengine.scene.Node;
 import de.yvka.slothengine.scene.Scene;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
 import javafx.fxml.FXML;
@@ -125,8 +126,22 @@ public class ShaderSlothController extends AbstractWindowController {
 
 
 	private void initRenderView() {
-		renderView.fitWidthProperty().bind(renderViewRoot.widthProperty());
-		renderView.fitHeightProperty().bind(renderViewRoot.heightProperty());
+
+		renderView.setPreserveRatio(true);
+		renderViewRoot.widthProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.intValue() % 2 != 0) {
+				newValue = newValue.intValue() + 1;
+			}
+			renderView.fitWidthProperty().set(newValue.intValue());
+
+		});
+		renderViewRoot.heightProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.intValue() % 2 != 0) {
+				newValue = newValue.intValue() + 1;
+			}
+			renderView.fitHeightProperty().set(newValue.intValue());
+
+		});
 	}
 
 	@Override
@@ -142,7 +157,6 @@ public class ShaderSlothController extends AbstractWindowController {
 			runRenderer(runningLatch);
 			Platform.runLater(primaryStage::close);
 		}).start();
-
 	}
 
 	public GenericEditorController getGenericEditorController() {

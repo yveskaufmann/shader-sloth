@@ -9,6 +9,7 @@ import de.yvka.slothengine.scene.Node;
 import de.yvka.slothengine.scene.Scene;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -42,6 +43,7 @@ public class SceneTreeEditor extends AbstractController {
 	 * @param scene the scene to load.
 	 */
 	void loadScene(Scene scene) {
+
 		class NodeModel {
 			public TreeItem<Node> node;
 			public TreeItem<Node> parent;
@@ -70,9 +72,8 @@ public class SceneTreeEditor extends AbstractController {
 		}
 
 		sceneTree.setRoot(rootNode.node);
+		sceneTree.getSelectionModel().selectFirst();
 	}
-
-
 
 	private void initTree() {
 

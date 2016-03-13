@@ -3,6 +3,7 @@ precision highp float;
 
 uniform sampler2D diffuseTexture;
 uniform mat4 sl_modelMatrix;
+uniform mat4 sl_viewMatrix;
 uniform vec3 sl_cameraPosition;
 uniform vec3 sl_cameraDirection;
 
@@ -29,8 +30,8 @@ in vec2 texturecoord;
 out vec4 fragmentColor;
 
 vec3 calcLightning(Light light, vec3 texelColor, vec3 normal, vec3 pos, vec3 camDir) {
-
-    vec3 lightDir = light.position.xyz - pos;
+    vec3 lightPos = (sl_viewMatrix * light.position).xyz;
+    vec3 lightDir = lightPos - pos;
     float distanceToLight = length(lightDir);
     lightDir = normalize(lightDir);
 
@@ -38,7 +39,7 @@ vec3 calcLightning(Light light, vec3 texelColor, vec3 normal, vec3 pos, vec3 cam
 
     vec3 ambient = texelColor.rgb * light.color.rgb;
 
-    float diffuseIntensity = max(dot(normal, lightDir), 0.2);
+    float diffuseIntensity = max(dot(normal, lightDir), 0.3);
     vec3 diffuse = diffuseIntensity * texelColor.rgb * light.color.rgb;
 
     float specularIntensity = 0.0;

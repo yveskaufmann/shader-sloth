@@ -33,7 +33,6 @@ public class ModelEditorController extends AbstractController {
 	@FXML private NumberInput xRotation;
 	@FXML private NumberInput yRotation;
 	@FXML private NumberInput zRotation;
-
 	@FXML ChoiceBox<String> materialChooser;
 
 	private Optional<Geometry> selectedNode = Optional.empty();

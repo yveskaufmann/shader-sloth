@@ -1,14 +1,13 @@
 package de.yvka.shadersloth.controller.genericEditor;
 
-import de.yvka.shadersloth.ShaderSloth;
 import de.yvka.shadersloth.controller.ShaderSlothController;
 import de.yvka.shadersloth.utils.AbstractController;
 import de.yvka.slothengine.scene.Geometry;
 import de.yvka.slothengine.scene.Node;
-import de.yvka.slothengine.scene.Scene;
 import de.yvka.slothengine.scene.light.Light;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 
 public class GenericEditorController extends AbstractController {
@@ -31,7 +30,9 @@ public class GenericEditorController extends AbstractController {
 	@Override
 	public Parent getRoot() {
 		if (root == null) {
-			root = new AnchorPane();
+			StackPane pane = new StackPane();
+			root = pane;
+
 		}
 		onFxmlLoaded();
 		return root;
@@ -39,7 +40,7 @@ public class GenericEditorController extends AbstractController {
 
 	public void loadNode(Node node) {
 		assert node != null;
-		AnchorPane container = (AnchorPane) root;
+		StackPane container = (StackPane) root;
 		if (node instanceof Geometry) {
 			if (activeController != modelEditorController) {
 				container.getChildren().clear();

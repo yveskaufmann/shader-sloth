@@ -22,7 +22,7 @@ void main() {
 
 	mat4 normalMatrix = transpose(inverse(sl_modelMatrix));
 	normal = normalize(normalMatrix * vec4(sl_normal, 0.0)).xyz;
-	position = (sl_modelMatrix * pos).xyz;
+	position = (sl_modelViewMatrix * pos).xyz;
 	texturecoord = sl_textcoord01;
 	gl_Position = sl_mvp * pos;
 }
