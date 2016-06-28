@@ -2,8 +2,8 @@
 
 # ShaderSloth
 
-A applications which allows it to create GLSL shaders interactively, it was during a assignment
-for the university.
+A applications which allows it to create GLSL shaders interactively.
+It is the result of a assignment for the university.
 
 ## Requirements
 
