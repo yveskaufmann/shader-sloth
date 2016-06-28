@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import eu.yvka.shadersloth.controls.*?>
+
+<GridPane maxWidth="Infinity" fx:id="geometryEditor"  hgap="2.0" vgap="2.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="82.0" />
+    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="82.0" />
+    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="81.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints vgrow="NEVER" />
+    <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints vgrow="NEVER" />
+  </rowConstraints>
+   <children>
+      <TextField fx:id="nodeId" promptText="Geometry Id" GridPane.columnSpan="3" />
+      <ChoiceBox fx:id="materialChooser" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+      <ChoiceBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+      <NumberInput fx:id="xPosition" alignment="CENTER_LEFT" label="X" promptText="X" GridPane.rowIndex="6" />
+      <NumberInput fx:id="yPosition" alignment="CENTER_LEFT" label="Y" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <NumberInput fx:id="zPosition" alignment="CENTER_LEFT" label="Z" promptText="Z" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <Label text="Position" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+      <Label text="Material" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+      <Label text="Mesh" GridPane.rowIndex="1" />
+      <Label text="Rotation" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+      <NumberInput fx:id="xRotation" alignment="CENTER_LEFT" label="X" promptText="X" GridPane.rowIndex="8"  />
+      <NumberInput fx:id="yRotation" alignment="CENTER_LEFT" label="Y" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <NumberInput fx:id="zRotation" alignment="CENTER_LEFT" label="Z" promptText="Z" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+      <Label text="Skalierung" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+      <NumberInput fx:id="xScale" alignment="CENTER_LEFT" label="X" promptText="X" GridPane.rowIndex="10" />
+      <NumberInput fx:id="yScale" alignment="CENTER_LEFT" label="Y" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <NumberInput fx:id="zScale" alignment="CENTER_LEFT" label="Z" promptText="Z" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+   </padding>
+</GridPane>

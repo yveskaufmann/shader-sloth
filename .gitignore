@@ -2,6 +2,7 @@
 *.jar
 *.iml
 *.log
+logs/
 .idea/
 target/
 build/

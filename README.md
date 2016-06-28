@@ -1,2 +1,2 @@
-# shader-sloth
-A application which allows you to develop glsl shaders interactivly
+# ShaderSloth
+A applications which allows it to create GLSL shaders interactively.
