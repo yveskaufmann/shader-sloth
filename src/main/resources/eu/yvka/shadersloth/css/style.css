@@ -1,0 +1,154 @@
+@import "theme.css";
+@import "fonts.css";
+
+/*------------------------------------------------------------------------------
+ * Base Styles
+ *------------------------------------------------------------------------------*/
+
+.theme-presets {
+
+	-sn-primary-color: -pink-500;
+	-sn-secondary-color: rgba(255, 255, 255, 0.87);
+	-sn-accent-color: -pink-A200;
+
+	/* dark text colors for light backgrounds */
+	-sn-dark-txt: #000000;
+	-sn-dark-primary-txt: derive(-sn-dark-txt, 87%);
+	-sn-dark-secondary-txt: derive(-sn-dark-txt, 54%);
+	-sn-dark-hint-txt: derive(-sn-dark-txt, 38%);
+	-dn-dark-divider-txt: derive(-sn-dark-txt, 16%);
+
+	/* light text colors for dark backgrounds */
+	-sn-light-txt: #FFFFFF;
+	-sn-light-primary-txt: derive(-sn-light-txt, 100%);
+	-sn-light-secondary-txt: derive(-sn-light-txt, 70%);
+	-sn-light-hint-txt: derive(-sn-light-txt, 50%);
+	-sn-light-divider-txt: derive(-sn-light-txt, 12%);
+	-fx-background-color: -sn-secondary-color;
+
+}
+
+/*------------------------------------------------------------------------------
+ * Material like text sizes
+ *------------------------------------------------------------------------------*/
+
+.display-4 {
+	-fx-font-family: Roboto-Light;
+	-fx-font-size: 112px;
+}
+
+.display-3 {
+	-fx-font-family: Roboto;
+	-fx-font-size: 56px;
+}
+
+.display-2 {
+	-fx-font-family: Roboto;
+	-fx-font-size: 45px;
+}
+
+.display-1 {
+	-fx-font-family: Roboto;
+	-fx-font-size: 34px;
+}
+
+.headline {
+	-fx-font-family: Roboto;
+	-fx-font-size: 24px;
+}
+
+.title {
+	-fx-font-family: Roboto-Medium;
+	-fx-font-size: 20px;
+}
+
+.subheading {
+	-fx-font-family: Roboto;
+	-fx-font-size: 15px;
+}
+
+.body-2{
+	-fx-font-family: Roboto-Medium;
+	-fx-font-size: 13px;
+}
+
+.body-1{
+	-fx-font-family: Roboto;
+	-fx-font-size: 13px;
+}
+
+.caption {
+	-fx-font-family: Roboto;
+	-fx-font-size: 12px;
+}
+
+
+.text {
+	-fx-font-family: "Roboto"!important;
+	-fx-font-smoothing-type: lcd!important;
+}
+
+.text-header {
+	-fx-font-family: Roboto!important;
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+}
+
+.text-mid {
+	-fx-font-family: Roboto!important;
+	-fx-font-size: 13px;
+}
+
+.text-small {
+	-fx-font-family: Roboto-Light!important;
+	-fx-font-size: 12px;
+	-fx-fill: gray;
+}
+
+.icon-label,
+.icon-label .text {
+	-fx-font-size: 22px;
+	-fx-font-family: FontAwesome !important;
+	-fx-font-weight: normal;
+	-fx-font-style: normal;
+	-fx-cursor: hand;
+
+}
+
+/*------------------------------------------------------------------------------
+ * Icon-Buttons
+ *------------------------------------------------------------------------------*/
+
+.button.icon-label {
+	-fx-border-color: null;
+	-fx-background-color: null;
+	-fx-padding: 4px;
+	-fx-graphic-text-gap: 30px;
+
+}
+
+.button.icon-label:hover {
+	-fx-font-family: FontAwesome !important;
+	-fx-font-size: 22px;
+}
+
+.button.icon-label:hover {
+	-fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
+}
+
+/*------------------------------------------------------------------------------
+ * Scroll-Barss
+ *------------------------------------------------------------------------------*/
+
+.scroll-bar .thumb {
+	-fx-background-radius: 10, 10;
+}
+.scroll-bar:vertical .thumb {
+	-fx-background-insets: 3 4 3 4, 4 5 4 5;
+}
+.scroll-bar:horizontal .thumb {
+	-fx-background-insets: 4 3 4 3, 5 4 5 4;
+}
+
+

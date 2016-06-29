@@ -1,11 +1,11 @@
 package eu.yvka.shadersloth.controller.genericEditor;
 
+import eu.yvka.shadersloth.ShaderSlothJavaFx;
 import eu.yvka.shadersloth.controller.ShaderSlothController;
-import eu.yvka.shadersloth.utils.AbstractController;
+import eu.yvka.shadersloth.utils.controller.AbstractController;
 import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.Node;
 import eu.yvka.slothengine.scene.light.Light;
-import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 
 
@@ -17,7 +17,7 @@ public class GenericEditorController extends AbstractController {
 	private AbstractController activeController;
 
 	public GenericEditorController(ShaderSlothController controller) {
-		super(null);
+		super(ShaderSlothJavaFx.class.getResource("view/genericEditor.fxml"));
 		this.slothController = controller;
 		modelEditorController = new ModelEditorController(controller);
 		lightEditorController = new LightEditorController(controller);
@@ -26,20 +26,9 @@ public class GenericEditorController extends AbstractController {
 	@Override
 	protected void onFxmlLoaded() {}
 
-	@Override
-	public Parent getRoot() {
-		if (root == null) {
-			StackPane pane = new StackPane();
-			root = pane;
-
-		}
-		onFxmlLoaded();
-		return root;
-	}
-
 	public void loadNode(Node node) {
 		assert node != null;
-		StackPane container = (StackPane) root;
+		StackPane container = (StackPane) getRoot();
 		if (node instanceof Geometry) {
 			if (activeController != modelEditorController) {
 				container.getChildren().clear();

@@ -38,7 +38,7 @@ public class ShaderEditor extends CodeArea {
 	private static final int TYPE_GROUP = 1 ;
 
 	{
-		getStylesheets().add(ShaderEditor.class.getResource("glsl-highlighting.css").toExternalForm());
+		getStylesheets().add(ShaderEditor.class.getResource("css/glsl-highlighting.css").toExternalForm());
 	}
 
 	public ShaderEditor() {

@@ -1,0 +1,40 @@
+/*------------------------------------------------------------------------------
+ * Font Faces
+ *------------------------------------------------------------------------------*/
+
+@font-face {
+    font-family: "Roboto-Regular";
+    src: url("../fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Roboto-Light";
+    src: url("../fonts/Roboto-Light.ttf");
+}
+
+@font-face {
+    font-family: "Roboto-Medium";
+    font-weight: 600;
+    src: url("../fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Roboto-Bold";
+    src: url("../fonts/Roboto-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Roboto-BoldItalic";
+    src: url("../fonts/Roboto-BoldItalic.ttf");
+
+}
+
+@font-face {
+    font-family: "FontAwesome";
+    src: url("../fonts/fontawesome-webfont.ttf");
+}

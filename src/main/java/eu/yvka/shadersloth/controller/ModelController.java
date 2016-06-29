@@ -1,6 +1,7 @@
-package eu.yvka.shadersloth;
+package eu.yvka.shadersloth.controller;
 
-import eu.yvka.shadersloth.utils.AbstractWindowController;
+import eu.yvka.shadersloth.ShaderSloth;
+import eu.yvka.shadersloth.utils.controller.AbstractWindowController;
 import javafx.stage.WindowEvent;
 
 public class ModelController extends AbstractWindowController {

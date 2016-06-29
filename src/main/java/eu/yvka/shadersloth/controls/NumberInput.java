@@ -191,8 +191,4 @@ public class NumberInput extends TextField {
 		return new NumberInputSkin(this);
 	}
 
-	@Override
-	public String getUserAgentStylesheet() {
-		return NumberInput.class.getResource("number-control.css").toExternalForm();
-	}
 }

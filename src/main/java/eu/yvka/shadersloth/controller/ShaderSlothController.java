@@ -3,17 +3,15 @@ package eu.yvka.shadersloth.controller;
 import eu.yvka.shadersloth.I18N.I18N;
 import eu.yvka.shadersloth.ShaderSloth;
 import eu.yvka.shadersloth.controller.genericEditor.GenericEditorController;
-import eu.yvka.shadersloth.utils.AbstractWindowController;
+import eu.yvka.shadersloth.utils.controller.AbstractWindowController;
 import eu.yvka.slothengine.engine.AppSettings;
 import eu.yvka.slothengine.engine.JavaFXOffscreenSupport;
-import eu.yvka.slothengine.scene.Geometry;
-import eu.yvka.slothengine.scene.Node;
 import eu.yvka.slothengine.scene.Scene;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ObjectPropertyBase;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -29,28 +27,6 @@ public class ShaderSlothController extends AbstractWindowController {
 	@FXML private AnchorPane renderViewRoot;
 	@FXML private ImageView renderView;
 
-	public ObjectProperty<Scene> slothSceneProperty() {
-		if (scene == null) {
-			scene = new ObjectPropertyBase<Scene>() {
-
-				@Override
-				public Object getBean() {
-					return ShaderSlothController.this;
-				}
-
-				@Override
-				public String getName() {
-					return "sceneProperty";
-				}
-			};
-		}
-		return scene;
-	}
-	private ObjectProperty<Scene> scene;
-	public Scene getSlothScene() {
-		return slothSceneProperty().get();
-	}
-
 	private Stage primaryStage;
 	private ShaderSloth rendererLoop;
 	private final CountDownLatch runningLatch = new CountDownLatch(1);
@@ -58,22 +34,20 @@ public class ShaderSlothController extends AbstractWindowController {
 	private SceneTreeEditor sceneTreeEditor = new SceneTreeEditor(this);
 	private GenericEditorController genericEditorController = new GenericEditorController(this);
 
-
 	public ShaderSlothController(Stage primaryStage) {
 		super(ShaderSloth.class.getResource("view/shaderSlothView.fxml"));
 		setTitle(I18N.getString("app.title"));
 		this.primaryStage = primaryStage;
-
-		slothSceneProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue != null) loadScene(newValue);
-		});
-
-		getStage();
 	}
 
 	@Override
 	protected void onFxmlLoaded() {
 		assert renderView != null;
+
+		sceneProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null) loadScene(newValue);
+		});
+
 		sceneTreeRoot.setContent(sceneTreeEditor.getRoot());
 		editorRoot.setContent(genericEditorController.getRoot());
 		initRenderView();
@@ -88,12 +62,7 @@ public class ShaderSlothController extends AbstractWindowController {
 
 	@Override
 	protected void onSceneCreated() {
-		getScene().getStylesheets().add(ShaderSloth.class.getResource("shaderSloth.css").toExternalForm());
-	}
-
-	@Override
-	protected Stage createStage() {
-		return this.primaryStage;
+		getScene().getStylesheets().add(ShaderSloth.class.getResource("css/style.css").toExternalForm());
 	}
 
 	/**
@@ -110,7 +79,7 @@ public class ShaderSlothController extends AbstractWindowController {
 		settings.set(JavaFXOffscreenSupport.JAVAFX_OFFSCREEN_SUPPORT, new JavaFXOffscreenSupport(renderView, runningLatch));
 
 		rendererLoop = new ShaderSloth();
-		rendererLoop.setOnStartedCallback(scene -> Platform.runLater(() -> slothSceneProperty().set(scene)));
+		rendererLoop.setOnStartedCallback(scene -> Platform.runLater(() -> sceneProperty().set(scene)));
 		rendererLoop.start(settings);
 	}
 
@@ -146,17 +115,47 @@ public class ShaderSlothController extends AbstractWindowController {
 	@Override
 	public void show() {
 		getStage().show();
-		getStage().toFront();
 		new Thread(() -> {
 			runRenderer(runningLatch);
 			Platform.runLater(primaryStage::close);
 		}).start();
 	}
 
+	/******************************************************************************
+	 *
+	 * Properties
+	 *
+	 ******************************************************************************/
+
+	private ObjectProperty<Scene> scene;
+
+	/**
+	 * @return the related scene property of this controller.
+     */
+	public ObjectProperty<Scene> sceneProperty() {
+		if (scene == null) {
+			scene = new SimpleObjectProperty<Scene>(this, "scene");
+		}
+		return scene;
+	}
+
+	/***
+	 * @return the related scene of this controller.
+     */
+	public Scene getSlothScene() {
+		return sceneProperty().get();
+	}
+
+	/**
+	 * @return the generic editor instance
+     */
 	public GenericEditorController getGenericEditorController() {
 		return genericEditorController;
 	}
 
+	/***
+	 * @return the scene editor
+     */
 	public SceneTreeEditor getSceneTreeEditor() {
 		return sceneTreeEditor;
 	}

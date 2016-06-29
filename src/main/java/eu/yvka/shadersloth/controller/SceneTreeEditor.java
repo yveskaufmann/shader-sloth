@@ -3,7 +3,7 @@ package eu.yvka.shadersloth.controller;
 import eu.yvka.shadersloth.ShaderSloth;
 import eu.yvka.shadersloth.controls.SceneTreeCell;
 import eu.yvka.shadersloth.dialog.GeometryCreateDialog;
-import eu.yvka.shadersloth.utils.AbstractController;
+import eu.yvka.shadersloth.utils.controller.AbstractController;
 import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.Node;
 import eu.yvka.slothengine.scene.Scene;

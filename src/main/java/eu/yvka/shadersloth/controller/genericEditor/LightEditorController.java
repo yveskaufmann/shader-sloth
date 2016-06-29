@@ -4,7 +4,7 @@ import eu.yvka.shadersloth.I18N.I18N;
 import eu.yvka.shadersloth.ShaderSloth;
 import eu.yvka.shadersloth.controller.ShaderSlothController;
 import eu.yvka.shadersloth.controls.NumberInput;
-import eu.yvka.shadersloth.utils.AbstractController;
+import eu.yvka.shadersloth.utils.controller.AbstractController;
 import eu.yvka.slothengine.math.Color;
 import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.light.Light;
