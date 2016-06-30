@@ -2,10 +2,12 @@ package eu.yvka.shadersloth;
 
 import eu.yvka.shadersloth.context.ApplicationContext;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import org.controlsfx.dialog.ExceptionDialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import eu.yvka.shadersloth.controller.ShaderSlothController;
+import eu.yvka.shadersloth.controllers.ShaderSlothController;
 
 import java.util.Collections;
 
@@ -18,8 +20,12 @@ public class ShaderSlothJavaFx extends Application {
 	public void init() throws Exception {
 		ApplicationContext.get().init(this, () -> Collections.emptyList());
 		Runtime.getRuntime().addShutdownHook(new Thread(ApplicationContext.get()::destroy));
-		Thread.setDefaultUncaughtExceptionHandler((t, e) ->
-			Log.error("Detect uncaught exception in [" + t.getName() + " Thread]", e));
+		Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+			Log.error("Detect uncaught exception in [" + t.getName() + " Thread]", e);
+			ExceptionDialog exceptionDialog = new ExceptionDialog(e);
+			exceptionDialog.showAndWait();
+			Platform.exit();
+		});
 
 	}
 
@@ -27,10 +33,12 @@ public class ShaderSlothJavaFx extends Application {
     public void start(final Stage primaryStage) {
 		controller = new ShaderSlothController(primaryStage);
 		controller.show();
+		controller.start();
 	}
 
 	@Override
 	public void stop() throws Exception {
+		controller.stop();
 		ApplicationContext.get().destroy();
 	}
 

@@ -1,7 +1,9 @@
 package eu.yvka.shadersloth.dialog;
 
+import eu.yvka.shadersloth.ShaderSloth;
 import eu.yvka.slothengine.scene.Geometry;
 import javafx.geometry.HPos;
+import javafx.scene.Node;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,7 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import eu.yvka.shadersloth.ShaderSloth;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
@@ -26,6 +28,7 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 	private ChoiceBox<String> modelTypeChoice;
 	private TextField geometryId;
 	private GridPane rootGrid;
+	private GridPane expendableRoot;
 
 	public GeometryCreateDialog() {
 		super();
@@ -36,6 +39,7 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 		setTitle("Create Geometry");
 		setHeaderText("Specify your desired geometry");
 		setGraphic(new ImageView(ShaderSloth.class.getResource("images/mesh_icon_32x32.png").toExternalForm()));
+		setResizable(true);
 
 		getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
 		Button okButton = (Button) getDialogPane().lookupButton(ButtonType.OK);
@@ -74,6 +78,13 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 		rootGrid.add(new Label("Kind:"), 0, 1);
 		rootGrid.add(modelTypeChoice, 1, 1);
 
+		expendableRoot = new GridPane();
+		expendableRoot.getColumnConstraints().addAll(col1, col2, col3);
+		expendableRoot.setAlignment(Pos.CENTER);
+		expendableRoot.setHgap(5);
+		expendableRoot.setVgap(5);
+		expendableRoot.setPadding(new Insets(20, 150, 10, 10));
+
 
 		modelTypeChoice.valueProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -86,10 +97,14 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 				case KIND_SPHERE:  createSphereEditor();break;
 				case KIND_OBJECT_FILE: createObjectFileEditor(); break;
 			}
-			getDialogPane().requestFocus();
-        });
 
-		getDialogPane().setContent(rootGrid);
+			getDialogPane().setExpandableContent(expendableRoot);
+			getDialogPane().setExpanded(expendableRoot.getChildren().size() > 0);
+			getDialogPane().requestFocus();
+			getDialogPane().layout();
+		});
+
+		getDialogPane().setContent(new StackPane(rootGrid));
 		getDialogPane().layout();
 	}
 
@@ -118,10 +133,8 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 	private void createSphereEditor() {
 	}
 
-
 	private void createCubeEditor() {
 	}
-
 
 	public Collection<FileChooser.ExtensionFilter> getSupportedExtensions() {
 		return Arrays.asList(

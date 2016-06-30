@@ -27,6 +27,7 @@ import eu.yvka.shadersloth.controls.NumberInput;
 public class TestControls extends Application {
 
 	private final static Logger Log = LoggerFactory.getLogger(TestControls.class);
+
 	private TreeView<Node> treeView = null;
 
 	public static void main(String[] args) {

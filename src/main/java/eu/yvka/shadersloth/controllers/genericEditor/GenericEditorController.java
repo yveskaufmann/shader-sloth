@@ -1,7 +1,7 @@
-package eu.yvka.shadersloth.controller.genericEditor;
+package eu.yvka.shadersloth.controllers.genericEditor;
 
 import eu.yvka.shadersloth.ShaderSlothJavaFx;
-import eu.yvka.shadersloth.controller.ShaderSlothController;
+import eu.yvka.shadersloth.controllers.ShaderSlothController;
 import eu.yvka.shadersloth.utils.controller.AbstractController;
 import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.Node;

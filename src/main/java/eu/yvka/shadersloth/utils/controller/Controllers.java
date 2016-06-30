@@ -59,7 +59,7 @@ public class Controllers {
 	public void unregisterController(Class<? extends AbstractController> controllerType) {
 		if (controllerMap.containsKey(controllerType)) {
 			ViewContext ctx = controllerMap.remove(controllerType);
-			Log.debug("Shutdown controller {}", controllerType.getName());
+			Log.debug("Shutdown controllers {}", controllerType.getName());
 		}
 	};
 

@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * A controller which controls a window and defines its content
+ * A controllers which controls a window and defines its content
  * by specifying a view/fxml file.
  */
 public abstract class AbstractWindowController extends AbstractController {
@@ -24,7 +24,7 @@ public abstract class AbstractWindowController extends AbstractController {
 	private static final Logger Log = LoggerFactory.getLogger(AbstractWindowController.class);
 
 	/**
-	 * The owner of the window which this controller
+	 * The owner of the window which this controllers
 	 * controls.
 	 */
 	private Window owner;
@@ -35,7 +35,7 @@ public abstract class AbstractWindowController extends AbstractController {
 	private Stage stage;
 
 	/**
-	 * The scene which is controlled by this controller.
+	 * The scene which is controlled by this controllers.
 	 */
 	private Scene scene;
 
@@ -50,7 +50,7 @@ public abstract class AbstractWindowController extends AbstractController {
 	 * Creates a {@code WindowController} for a top level window and specifies
 	 * the corresponding view and set the default {@link ResourceBundle}.
 	 *
-	 * Use this constructor for creating a controller for a top level
+	 * Use this constructor for creating a controllers for a top level
 	 * window.
 	 *
 	 * @param location a url to the corresponding fxml/view file.
@@ -63,7 +63,7 @@ public abstract class AbstractWindowController extends AbstractController {
 	 * Creates a {@code WindowController} for a non top level window and specifies
 	 * the corresponding view and set the default {@link ResourceBundle}.
 	 *
-	 * Use this constructor for creating a controller for a child window
+	 * Use this constructor for creating a controllers for a child window
 	 * of the {@code owner} window.
  	 *
 	 * @param location a url to the corresponding fxml/view file.
@@ -101,7 +101,7 @@ public abstract class AbstractWindowController extends AbstractController {
 	public Scene getScene() {
 		if (scene == null) {
 			Parent root = getRoot();
-			scene = new Scene(root, 1024, 768, true, SceneAntialiasing.BALANCED);
+			scene = new Scene(root, -1, -1, true, SceneAntialiasing.BALANCED);
 			onSceneCreated();
 		}
 		return scene;

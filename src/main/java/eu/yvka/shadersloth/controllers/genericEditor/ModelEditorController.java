@@ -1,21 +1,25 @@
-package eu.yvka.shadersloth.controller.genericEditor;
+package eu.yvka.shadersloth.controllers.genericEditor;
 
 import eu.yvka.shadersloth.ShaderSloth;
-import eu.yvka.shadersloth.controller.ShaderSlothController;
+import eu.yvka.shadersloth.controllers.ShaderSlothController;
 import eu.yvka.shadersloth.controls.NumberInput;
 import eu.yvka.shadersloth.utils.controller.AbstractController;
+import eu.yvka.slothengine.engine.Engine;
+import eu.yvka.slothengine.material.Material;
 import eu.yvka.slothengine.math.MathUtils;
 import eu.yvka.slothengine.scene.Geometry;
-import eu.yvka.slothengine.scene.Node;
+import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 import org.joml.Vector3f;
 
 import java.util.Optional;
 
 public class ModelEditorController extends AbstractController {
-
 
 	@FXML private TextField nodeId;
 	@FXML private NumberInput xPosition;
@@ -29,7 +33,8 @@ public class ModelEditorController extends AbstractController {
 	@FXML private NumberInput xRotation;
 	@FXML private NumberInput yRotation;
 	@FXML private NumberInput zRotation;
-	@FXML ChoiceBox<String> materialChooser;
+
+	@FXML ChoiceBox<Material> materialChooser;
 
 	private Optional<Geometry> selectedNode = Optional.empty();
 	private final ShaderSlothController slothController;
@@ -86,6 +91,45 @@ public class ModelEditorController extends AbstractController {
 		zRotation.valueProperty().addListener((observable, oldValue, newValue) -> {
 			selectedNode.ifPresent((node) -> node.getRotation().rotationZ(MathUtils.toRadians(newValue.floatValue())));
 		});
+
+		initMaterialChooser();
+	}
+
+	private void initMaterialChooser() {
+		materialChooser.setConverter(new StringConverter<Material>() {
+			@Override
+			public String toString(Material object) {
+				return object.getMaterialName();
+			}
+			@Override
+			public Material fromString(String materialName) {
+				return Engine.materialManager().getMaterial(materialName).get();
+			}
+		});
+
+		materialChooser.valueProperty().addListener((observable, oldMaterial, newMaterial) -> {
+			if (newMaterial == null) return;
+			selectedNode.ifPresent((node) -> node.setMaterial(newMaterial));
+		});
+
+		Engine.materialManager().getMaterial().addListener((MapChangeListener<String, Material>) change -> {
+			SingleSelectionModel<Material> selectionModel = materialChooser.getSelectionModel();
+			Material selection = selectionModel.getSelectedItem();
+			materialChooser.setItems(
+				FXCollections.observableArrayList(Engine.materialManager().getMaterial().values())
+			);
+
+			if (selection != null && materialChooser.getItems().contains(selection)) {
+				selectionModel.select(selection);
+			} else {
+				selectionModel.selectFirst();
+			}
+
+        });
+
+		materialChooser.setItems(
+			FXCollections.observableArrayList(Engine.materialManager().getMaterial().values())
+		);
 	}
 
 	public void updateData(Geometry node) {
@@ -109,5 +153,7 @@ public class ModelEditorController extends AbstractController {
 		xScale.setValue(scale.x);
 		yScale.setValue(scale.y);
 		zScale.setValue(scale.z);
+
+		materialChooser.setValue(node.getMaterial());
 	}
 }

@@ -2,6 +2,7 @@ package eu.yvka.shadersloth.controls;
 
 import eu.yvka.shadersloth.controls.number.NumberInputSkin;
 import javafx.beans.property.*;
+import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.control.TextField;
 

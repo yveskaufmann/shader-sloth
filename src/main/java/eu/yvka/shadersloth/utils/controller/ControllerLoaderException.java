@@ -1,7 +1,7 @@
 package eu.yvka.shadersloth.utils.controller;
 
 /**
- * Indicates error which happens during the controller creation.
+ * Indicates error which happens during the controllers creation.
  */
 public class ControllerLoaderException extends Exception {
 

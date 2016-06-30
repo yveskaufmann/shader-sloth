@@ -1,4 +1,4 @@
-package eu.yvka.shadersloth.controller;
+package eu.yvka.shadersloth.controllers;
 
 import eu.yvka.shadersloth.ShaderSloth;
 import eu.yvka.shadersloth.controls.SceneTreeCell;
@@ -12,21 +12,23 @@ import javafx.beans.property.ObjectPropertyBase;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.text.MessageFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class SceneTreeEditor extends AbstractController {
+public class SceneTreeEditorController extends AbstractController {
 
+	private static final Logger Log = LoggerFactory.getLogger(SceneTreeEditorController.class);
 
 	@FXML private TreeView<Node> sceneTree;
 
 	private ObjectProperty<Node> selectedNode;
 	private ShaderSlothController slothController;
 
-
-
-	public SceneTreeEditor(ShaderSlothController slothController) {
+	public SceneTreeEditorController(ShaderSlothController slothController) {
 		super(ShaderSloth.class.getResource("view/sceneTreeView.fxml"));
 		this.slothController = slothController;
 	}
@@ -75,7 +77,6 @@ public class SceneTreeEditor extends AbstractController {
 	}
 
 	private void initTree() {
-
 		Menu newMenu = new Menu("New");
 		MenuItem newModel = new MenuItem("Model");
 		newMenu.setOnAction((event -> {
@@ -97,9 +98,14 @@ public class SceneTreeEditor extends AbstractController {
 		sceneTree.setContextMenu(contextMenu);
 		sceneTree.setCellFactory(param -> new SceneTreeCell());
 		sceneTree.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-			slothController.getGenericEditorController().loadNode(newValue.getValue());
+			Log.debug("on selectedItemProperty: "  + MessageFormat.format("newValue = {0}, oldValue =  {1}", oldValue, newValue));
+			Log.debug("on selectedItemProperty: "  + MessageFormat.format("newValue.getValue = {0}", newValue.getValue()));
 
-			if (newValue != null && newValue.getValue() instanceof Geometry) {
+			if (newValue != null) {
+				slothController.getGenericEditorController().loadNode(newValue.getValue());
+			}
+
+			if (newValue.getValue() instanceof Geometry) {
 				Geometry geometry = (Geometry) newValue.getValue();
 				geometry.getMaterial().getRenderState().enableWireframe(true);
 			}
@@ -109,7 +115,6 @@ public class SceneTreeEditor extends AbstractController {
 				geometry.getMaterial().getRenderState().enableWireframe(false);
 			}
 		}));
-
 	}
 
 	/**
@@ -123,7 +128,7 @@ public class SceneTreeEditor extends AbstractController {
 			selectedNode = new ObjectPropertyBase<Node>() {
 				@Override
 				public java.lang.Object getBean() {
-					return SceneTreeEditor.this;
+					return SceneTreeEditorController.this;
 				}
 
 				@Override

@@ -72,7 +72,7 @@ public class ControllerBuilder {
 		try {
 			return createBy(controllerClass.newInstance(), controllerClass);
 		} catch (InstantiationException | IllegalAccessException e) {
-			throw new ControllerLoaderException("Could not create controller: " + controllerClass.getSimpleName(), e);
+			throw new ControllerLoaderException("Could not create controllers: " + controllerClass.getSimpleName(), e);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class ControllerBuilder {
 		// Load all actions
 		loadMethodMetaData(controllerClass, controller, meta);
 
-		// Create loader and controller instance
+		// Create loader and controllers instance
 		Parent rootView = null;
 		try {
 			FXMLLoader loader = createLoader(controller);
@@ -191,7 +191,7 @@ public class ControllerBuilder {
 				try {
 					Platform.runLater(() -> ReflectionUtils.invokeMethod(controller, method));
 				} catch (Exception ex) {
-					Log.error("Failed to invoke the controller action {}{}.", controllerClass.getName(), method.getName());
+					Log.error("Failed to invoke the controllers action {}{}.", controllerClass.getName(), method.getName());
 					throw new IllegalStateException("Could not invoke action method " + method, ex);
 				}
 			});

@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
 /**
- * Meta data about a controller
+ * Meta data about a controllers
  */
 public class ControllerMeta {
 
@@ -47,7 +47,7 @@ public class ControllerMeta {
 	}
 
 	/**
-	 * Defines the title of a controller
+	 * Defines the title of a controllers
 	 *
 	 * @defaultValue empty
 	 */
@@ -78,7 +78,7 @@ public class ControllerMeta {
 	}
 
 	/**
-	 * Defines the graphic node of a controller
+	 * Defines the graphic node of a controllers
 	 *
 	 * @defaultValue empty
 	 */

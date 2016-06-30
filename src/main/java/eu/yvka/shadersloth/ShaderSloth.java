@@ -1,6 +1,5 @@
 package eu.yvka.shadersloth;
 
-import eu.yvka.slothengine.engine.AppSettings;
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.engine.EngineApp;
 import eu.yvka.slothengine.geometry.primitives.Cube;
@@ -8,15 +7,14 @@ import eu.yvka.slothengine.geometry.primitives.Sphere;
 import eu.yvka.slothengine.input.InputListener;
 import eu.yvka.slothengine.input.event.KeyEvent;
 import eu.yvka.slothengine.input.event.MouseEvent;
-import eu.yvka.slothengine.material.Pass;
-import eu.yvka.slothengine.scene.Scene;
-import eu.yvka.slothengine.scene.light.PointLight;
 import eu.yvka.slothengine.material.BasicMaterial;
+import eu.yvka.slothengine.material.Pass;
 import eu.yvka.slothengine.math.Color;
-import eu.yvka.slothengine.renderer.FPSCounter;
 import eu.yvka.slothengine.renderer.RenderState;
 import eu.yvka.slothengine.scene.Geometry;
+import eu.yvka.slothengine.scene.Scene;
 import eu.yvka.slothengine.scene.camera.FreeCamera;
+import eu.yvka.slothengine.scene.light.PointLight;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -43,7 +41,6 @@ public class ShaderSloth extends EngineApp implements InputListener {
 	protected void prepare() {
 
 		zoomLevel = 1.0f;
-
 		inputManager.addListener(this);
 
 		Random rnd = new Random();
@@ -156,19 +153,4 @@ public class ShaderSloth extends EngineApp implements InputListener {
 			}
 		}
 	}
-
-	/**
-	 * Run the eu.yvka.slothengine.renderer without offscreen support, exists only for
-	 * development and debugging purposes.
-	 *
-	 * @param args program arguments
-	 * @throws Exception
-	 */
-	public static void main(String[] args) throws Exception {
-		EngineApp sandbox = new ShaderSloth();
-		sandbox.start(new AppSettings());
-	}
-
-
-
 }

@@ -1,4 +1,4 @@
-package eu.yvka.shadersloth.controller;
+package eu.yvka.shadersloth.controllers;
 
 import eu.yvka.shadersloth.ShaderSloth;
 import eu.yvka.shadersloth.utils.controller.AbstractWindowController;

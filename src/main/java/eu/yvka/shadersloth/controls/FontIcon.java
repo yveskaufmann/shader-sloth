@@ -68,12 +68,6 @@ public class FontIcon extends Label {
 
 	private void initialize() {
 		getStyleClass().add(DEFAULT_STYLE_CLASS);
-		getStyleClass().addListener(new ListChangeListener<String>() {
-			@Override
-			public void onChanged(Change<? extends String> c) {
-				System.out.println(String.join(";", getStyleClass()));
-			}
-		});
 	}
 
 	/******************************************************************************

@@ -27,8 +27,8 @@
   </rowConstraints>
    <children>
       <TextField fx:id="nodeId" promptText="Geometry Id" GridPane.columnSpan="3" />
-      <ChoiceBox fx:id="materialChooser" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-      <ChoiceBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+      <ChoiceBox fx:id="modelChooser" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+      <ChoiceBox fx:id="materialChooser" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="3" GridPane.rowIndex="4" />
       <NumberInput fx:id="xPosition" alignment="CENTER_LEFT" label="X" promptText="X" GridPane.rowIndex="6" />
       <NumberInput fx:id="yPosition" alignment="CENTER_LEFT" label="Y" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <NumberInput fx:id="zPosition" alignment="CENTER_LEFT" label="Z" promptText="Z" GridPane.columnIndex="2" GridPane.rowIndex="6" />

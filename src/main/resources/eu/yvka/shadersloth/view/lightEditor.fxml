@@ -29,7 +29,8 @@
             <ChoiceBox value="%light.type.point" fx:id="lightTypeChoice" prefHeight="25.0" prefWidth="2165.0" GridPane.columnSpan="3" GridPane.rowIndex="1"/>
             <TextField GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Label text="%light.energy" GridPane.rowIndex="3" />
-            <Slider GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <Slider fx:id="lightEnergySlider" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <NumberInput fx:id="lightEnergy" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Label text="%light.position" GridPane.rowIndex="5" />
             <NumberInput fx:id="xPosition" label="X" promptText="X" GridPane.rowIndex="6" />
             <NumberInput fx:id="yPosition" label="Y" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="6" />

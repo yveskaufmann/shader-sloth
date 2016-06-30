@@ -1,16 +1,16 @@
-package eu.yvka.shadersloth.controller.genericEditor;
+package eu.yvka.shadersloth.controllers.genericEditor;
 
 import eu.yvka.shadersloth.I18N.I18N;
 import eu.yvka.shadersloth.ShaderSloth;
-import eu.yvka.shadersloth.controller.ShaderSlothController;
+import eu.yvka.shadersloth.controllers.ShaderSlothController;
 import eu.yvka.shadersloth.controls.NumberInput;
 import eu.yvka.shadersloth.utils.controller.AbstractController;
 import eu.yvka.slothengine.math.Color;
-import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.light.Light;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 import java.util.Optional;
@@ -23,6 +23,8 @@ public class LightEditorController extends AbstractController {
 	@FXML private NumberInput zPosition;
 	@FXML private ChoiceBox<String> lightTypeChoice;
 	@FXML private ColorPicker lightIntensity;
+	@FXML private NumberInput lightEnergy;
+	@FXML private Slider lightEnergySlider;
 
 	private Optional<Light> selectedNode = Optional.empty();
 	private final ShaderSlothController slothController;
@@ -59,6 +61,23 @@ public class LightEditorController extends AbstractController {
 			});
 		});
 
+		lightEnergySlider.setMin(0.0);
+		lightEnergySlider.setMax(10.0);
+		lightEnergySlider.setBlockIncrement(0.1);
+		lightEnergySlider.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
+			lightEnergy.setValue(newValue1.doubleValue());
+		});
+
+
+		lightEnergy.setMaxValue(10.0);
+		lightEnergy.setMinValue(0.0);
+		lightEnergy.valueProperty().addListener((observable, oldValue, newValue) -> {
+			lightEnergySlider.setValue(newValue.doubleValue());
+			selectedNode.ifPresent((node) -> {
+				node.setAttenuation(newValue.floatValue());
+			});
+		});
+
 		lightTypeChoice.getItems().addAll(
 			I18N.getString("light.type.point"),
 			I18N.getString("light.type.direction"),
@@ -74,6 +93,8 @@ public class LightEditorController extends AbstractController {
 		xPosition.setValue(node.getPosition().x);
 		yPosition.setValue(node.getPosition().y);
 		zPosition.setValue(node.getPosition().z);
+		lightEnergy.setValue(node.getAttenuation());
+
 
 		Color color = node.getColor();
 		lightIntensity.setValue(

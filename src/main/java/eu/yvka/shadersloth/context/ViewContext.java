@@ -7,9 +7,9 @@ import javafx.scene.Parent;
 public class ViewContext<T extends AbstractController> extends AbstractContext {
 
 	/**
-	 * Property for the associated controller.
+	 * Property for the associated controllers.
 	 */
-	public static final String PROPERTY_CONTROLLER = "controller";
+	public static final String PROPERTY_CONTROLLER = "controllers";
 
 	private Parent rootNode;
 	private T controller;

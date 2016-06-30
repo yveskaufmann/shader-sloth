@@ -13,8 +13,8 @@ import java.util.ResourceBundle;
 
 /**
  * A Controller for a specific view.
- * A view is a fxml file which is load and initialized by this controller.
- * The controller is responsible to manage the specified view.
+ * A view is a fxml file which is load and initialized by this controllers.
+ * The controllers is responsible to manage the specified view.
  */
 public abstract class AbstractController {
 
@@ -24,7 +24,7 @@ public abstract class AbstractController {
 	private Logger Log = LoggerFactory.getLogger(AbstractController.class);
 
 	/**
-	 * The FXML view/file which is related to this controller
+	 * The FXML view/file which is related to this controllers
 	 */
 	private URL fxmlFile;
 
@@ -41,7 +41,7 @@ public abstract class AbstractController {
 	private ViewContext<AbstractController> viewContext;
 
 	/**
-	 * Creates a controller for the view which is defined
+	 * Creates a controllers for the view which is defined
 	 * in the fxml file at the specified location.
      */
 	public AbstractController(URL location) {
@@ -51,7 +51,7 @@ public abstract class AbstractController {
 	/**
 	 * <b>This constructor is only for internal use</b>
 	 *
-	 * Creates a controller for the view which is defined
+	 * Creates a controllers for the view which is defined
 	 * in the fxml file at the specified location. And specifies
 	 * the {code ResourceBundle} which should be used by the controlled
 	 * view.
@@ -78,7 +78,7 @@ public abstract class AbstractController {
 	}
 
 	/**
-	 * Provides context information about this controller.
+	 * Provides context information about this controllers.
 	 *
 	 * @return context about this view object.
      */
@@ -90,8 +90,8 @@ public abstract class AbstractController {
 	}
 
 	/**
-	 * Initiate the controller and load the corresponding fxml file which contains the
-	 * view of this controller.
+	 * Initiate the controllers and load the corresponding fxml file which contains the
+	 * view of this controllers.
 	 */
 	@SuppressWarnings("unchecked")
 	protected void initiateController() throws ControllerLoaderException {
@@ -142,7 +142,7 @@ public abstract class AbstractController {
 	/**
 	 * @return the location of the corresponding fxml file.
 	 * This contains the view which is controlled by
-	 * this controller.
+	 * this controllers.
 	 */
 	URL getLocation() {
 		return fxmlFile;
@@ -151,7 +151,7 @@ public abstract class AbstractController {
 
 
 	/**
-	 * Will be called before if controller
+	 * Will be called before if controllers
 	 * is resumed from a pause state.
 	 * @deprecated
 	 */
@@ -159,7 +159,7 @@ public abstract class AbstractController {
 	};
 
 	/**
-	 * Will be called before a controller is paused.
+	 * Will be called before a controllers is paused.
 	 * @deprecated
 	 */
 	public void onPause() {
