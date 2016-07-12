@@ -1,9 +1,11 @@
 package eu.yvka.shadersloth.utils.controller;
 
 import eu.yvka.shadersloth.context.ViewContext;
+import eu.yvka.shadersloth.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PreDestroy;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,7 +61,7 @@ public class Controllers {
 	public void unregisterController(Class<? extends AbstractController> controllerType) {
 		if (controllerMap.containsKey(controllerType)) {
 			ViewContext ctx = controllerMap.remove(controllerType);
-			Log.debug("Shutdown controllers {}", controllerType.getName());
+			Log.debug("Shutdown controller {}", controllerType.getName());
 		}
 	};
 
@@ -75,4 +77,11 @@ public class Controllers {
 		return null;
 	}
 
+	public void unregister() {
+		controllerMap.forEach((controllerCls, ctx) -> {
+			Log.debug("Shutdown controller {}", controllerCls.getName());
+			ReflectionUtils.invokeMethodsWithAnnotation(controllerCls, ctx.getController(), PreDestroy.class);
+		});
+		controllerMap.clear();
+	}
 }

@@ -1,6 +1,6 @@
 package eu.yvka.shadersloth.controllers.genericEditor;
 
-import eu.yvka.shadersloth.ShaderSlothJavaFx;
+import eu.yvka.shadersloth.App;
 import eu.yvka.shadersloth.controllers.ShaderSlothController;
 import eu.yvka.shadersloth.utils.controller.AbstractController;
 import eu.yvka.slothengine.scene.Geometry;
@@ -17,7 +17,7 @@ public class GenericEditorController extends AbstractController {
 	private AbstractController activeController;
 
 	public GenericEditorController(ShaderSlothController controller) {
-		super(ShaderSlothJavaFx.class.getResource("view/genericEditor.fxml"));
+		super(App.class.getResource("view/genericEditor.fxml"));
 		this.slothController = controller;
 		modelEditorController = new ModelEditorController(controller);
 		lightEditorController = new LightEditorController(controller);

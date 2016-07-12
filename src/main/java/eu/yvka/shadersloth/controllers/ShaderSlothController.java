@@ -1,7 +1,7 @@
 package eu.yvka.shadersloth.controllers;
 
 import eu.yvka.shadersloth.I18N.I18N;
-import eu.yvka.shadersloth.ShaderSloth;
+import eu.yvka.shadersloth.ShaderSlothRenderer;
 import eu.yvka.shadersloth.controllers.genericEditor.GenericEditorController;
 import eu.yvka.shadersloth.controls.ShaderEditor;
 import eu.yvka.shadersloth.services.RenderService;
@@ -59,7 +59,7 @@ public class ShaderSlothController extends AbstractWindowController {
 	 ******************************************************************************/
 
 	public ShaderSlothController(Stage primaryStage) {
-		super(ShaderSloth.class.getResource("view/shaderSlothView.fxml"), primaryStage);
+		super(ShaderSlothRenderer.class.getResource("view/shaderSlothView.fxml"), primaryStage);
 		setTitle(I18N.getString("app.title"));
 
 	}
@@ -67,7 +67,7 @@ public class ShaderSlothController extends AbstractWindowController {
 	@Override
 	protected void onFxmlLoaded() {
 		assert renderView != null;
-		getStage().getIcons().add(new Image(ShaderSloth.class.getResource("images/material_icon_64x64.png").toExternalForm()));
+		getStage().getIcons().add(new Image(ShaderSlothRenderer.class.getResource("images/material_icon_64x64.png").toExternalForm()));
 
 		sceneTreeRoot.setContent(sceneTreeEditor.getRoot());
 		editorRoot.setContent(genericEditorController.getRoot());
@@ -116,7 +116,7 @@ public class ShaderSlothController extends AbstractWindowController {
 
 	@Override
 	protected void onSceneCreated() {
-		getScene().getStylesheets().add(ShaderSloth.class.getResource("css/style.css").toExternalForm());
+		getScene().getStylesheets().add(ShaderSlothRenderer.class.getResource("css/style.css").toExternalForm());
 	}
 
 	/******************************************************************************
@@ -150,13 +150,13 @@ public class ShaderSlothController extends AbstractWindowController {
 	}
 
 	public void start() {
-		Log.info("Start ShaderSloth View");
+		Log.info("Start ShaderSlothRenderer View");
 		renderService.start();
 	}
 
 
 	public void stop() {
-		Log.info("Stop ShaderSloth View");
+		Log.info("Stop ShaderSlothRenderer View");
 		renderService.cancel();
 	}
 

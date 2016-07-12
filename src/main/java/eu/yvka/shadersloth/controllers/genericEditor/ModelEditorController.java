@@ -1,6 +1,6 @@
 package eu.yvka.shadersloth.controllers.genericEditor;
 
-import eu.yvka.shadersloth.ShaderSloth;
+import eu.yvka.shadersloth.ShaderSlothRenderer;
 import eu.yvka.shadersloth.controllers.ShaderSlothController;
 import eu.yvka.shadersloth.controls.NumberInput;
 import eu.yvka.shadersloth.utils.controller.AbstractController;
@@ -40,7 +40,7 @@ public class ModelEditorController extends AbstractController {
 	private final ShaderSlothController slothController;
 
 	public ModelEditorController(ShaderSlothController controller) {
-		super(ShaderSloth.class.getResource("view/modelEditor.fxml"));
+		super(ShaderSlothRenderer.class.getResource("view/modelEditor.fxml"));
 		this.slothController = controller;
 	}
 

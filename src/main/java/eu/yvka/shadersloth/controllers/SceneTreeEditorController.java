@@ -1,8 +1,8 @@
 package eu.yvka.shadersloth.controllers;
 
-import eu.yvka.shadersloth.ShaderSloth;
+import eu.yvka.shadersloth.ShaderSlothRenderer;
 import eu.yvka.shadersloth.controls.SceneTreeCell;
-import eu.yvka.shadersloth.dialog.GeometryCreateDialog;
+import eu.yvka.shadersloth.controls.dialog.GeometryCreateDialog;
 import eu.yvka.shadersloth.utils.controller.AbstractController;
 import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.Node;
@@ -29,7 +29,7 @@ public class SceneTreeEditorController extends AbstractController {
 	private ShaderSlothController slothController;
 
 	public SceneTreeEditorController(ShaderSlothController slothController) {
-		super(ShaderSloth.class.getResource("view/sceneTreeView.fxml"));
+		super(ShaderSlothRenderer.class.getResource("view/sceneTreeView.fxml"));
 		this.slothController = slothController;
 	}
 
@@ -81,7 +81,7 @@ public class SceneTreeEditorController extends AbstractController {
 		MenuItem newModel = new MenuItem("Model");
 		newMenu.setOnAction((event -> {
 			GeometryCreateDialog dialog = new GeometryCreateDialog();
-			dialog.initOwner(null);
+			dialog.initOwner(sceneTree.getScene().getWindow());
 			dialog.showAndWait();
 
 		}));

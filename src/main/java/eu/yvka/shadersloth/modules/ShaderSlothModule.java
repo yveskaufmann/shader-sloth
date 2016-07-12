@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
 
 /***
- * This module contains all bindings for the ShaderSloth.
+ * This module contains all bindings for the ShaderSlothRenderer.
  *
  * For more information about guice injection modules
  * see: https://github.com/google/guice/wiki/GettingStarted.

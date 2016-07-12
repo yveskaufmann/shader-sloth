@@ -1,7 +1,7 @@
 package eu.yvka.shadersloth.controllers.genericEditor;
 
 import eu.yvka.shadersloth.I18N.I18N;
-import eu.yvka.shadersloth.ShaderSloth;
+import eu.yvka.shadersloth.ShaderSlothRenderer;
 import eu.yvka.shadersloth.controllers.ShaderSlothController;
 import eu.yvka.shadersloth.controls.NumberInput;
 import eu.yvka.shadersloth.utils.controller.AbstractController;
@@ -30,7 +30,7 @@ public class LightEditorController extends AbstractController {
 	private final ShaderSlothController slothController;
 
 	public LightEditorController(ShaderSlothController controller) {
-		super(ShaderSloth.class.getResource("view/lightEditor.fxml"));
+		super(ShaderSlothRenderer.class.getResource("view/lightEditor.fxml"));
 		this.slothController = controller;
 	}
 

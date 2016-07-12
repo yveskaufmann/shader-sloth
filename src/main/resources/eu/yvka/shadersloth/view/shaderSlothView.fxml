@@ -29,7 +29,6 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-                <ToolBar prefHeight="40.0" prefWidth="200.0" />
             </children>
         </VBox>
     </top>

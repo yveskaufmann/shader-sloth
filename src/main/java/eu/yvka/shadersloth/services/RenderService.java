@@ -1,6 +1,6 @@
 package eu.yvka.shadersloth.services;
 
-import eu.yvka.shadersloth.ShaderSloth;
+import eu.yvka.shadersloth.ShaderSlothRenderer;
 import eu.yvka.slothengine.engine.AppSettings;
 import eu.yvka.slothengine.engine.JavaFXOffscreenSupport;
 import eu.yvka.slothengine.scene.Scene;
@@ -33,7 +33,7 @@ public class RenderService extends Service<Void> {
 
 	private final CountDownLatch runningLatch = new CountDownLatch(1);
 	private final ImageView renderView;
-	private ShaderSloth rendererLoop;
+	private ShaderSlothRenderer rendererLoop;
 
 	/******************************************************************************
 	 *
@@ -74,7 +74,7 @@ public class RenderService extends Service<Void> {
 				settings.set(AppSettings.Height, (int) renderView.getFitHeight());
 				settings.set(JavaFXOffscreenSupport.JAVAFX_OFFSCREEN_SUPPORT, new JavaFXOffscreenSupport(renderView, runningLatch));
 
-				rendererLoop = new ShaderSloth();
+				rendererLoop = new ShaderSlothRenderer();
 				rendererLoop.setOnStartedCallback(scene -> setScene(scene));
 				try {
 					rendererLoop.start(settings);

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+
 /**
  * Builder class for creating Controller instances.a
  */
@@ -72,7 +73,7 @@ public class ControllerBuilder {
 		try {
 			return createBy(controllerClass.newInstance(), controllerClass);
 		} catch (InstantiationException | IllegalAccessException e) {
-			throw new ControllerLoaderException("Could not create controllers: " + controllerClass.getSimpleName(), e);
+			throw new ControllerLoaderException("Could not create controller: " + controllerClass.getSimpleName(), e);
 		}
 	}
 
@@ -96,7 +97,7 @@ public class ControllerBuilder {
 		// Load all actions
 		loadMethodMetaData(controllerClass, controller, meta);
 
-		// Create loader and controllers instance
+		// Create loader and controller instance
 		Parent rootView = null;
 		try {
 			FXMLLoader loader = createLoader(controller);
@@ -131,18 +132,26 @@ public class ControllerBuilder {
 		}
 	}
 
-	private <T extends AbstractController> FXMLLoader createLoader(T controller) {
+	public  <T extends AbstractController> FXMLLoader createLoader(T controller) {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(controller.getLocation());
 		loader.setResources(controller.getResourceBundle());
 		loader.setCharset(Charset.forName("UTF-8"));
 		loader.setController(controller);
-		loader.setControllerFactory(c -> controller);
+		loader.setControllerFactory((cls) -> {
+			try {
+				// Fall back implementation if no controller instance is provided
+				Object instance = cls.newInstance();
+				ApplicationContext.get().getInjector().injectMembers(instance);
+				return instance;
+			} catch (InstantiationException | IllegalAccessException ex) {
+				throw new IllegalStateException("Cannot instantiate controller: " + controller , ex);
+			}
+		});
 		return loader;
 	}
 
-	private <T extends AbstractController> void injectDependencies(Class<T> controllerClass, ViewContext<T> ctx) {
-
+	public <T extends AbstractController> void injectDependencies(Class<T> controllerClass, ViewContext<T> ctx) {
 
 
 		for(Field field : ReflectionUtils.getAllFields(controllerClass)) {
@@ -153,16 +162,24 @@ public class ControllerBuilder {
 		}
 		ApplicationContext.get().getInjector().injectMembers(ctx.getController());
 
-		injectFXMLFields(controllerClass, ctx);
+		injectIncludedFXMLFields(controllerClass, ctx);
 	}
 
 	/**
 	 * Because of some restrictions in the FXMLLoader not all fields that are annotated with @FXML will be injected
 	 * such as fields that are included by fx:include.
 	 */
-	private <T extends AbstractController> void injectFXMLFields(Class<T> controllerClass, ViewContext<T> ctx) {
+	public <T extends AbstractController> void injectIncludedFXMLFields(Class<T> controllerClass, ViewContext<T> ctx) {
 		T controller = ctx.getController();
 		Node root = ctx.getRootNode();
+		injectIncludedFXMLFields(controllerClass, controller, root);
+	}
+
+	public void injectIncludedFXMLFields(Object controller, Node root) {
+		injectIncludedFXMLFields(controller.getClass(), controller, root);
+	}
+
+	private void injectIncludedFXMLFields(Class<?> controllerClass, Object controller, Node root) {
 		for (Field field : ReflectionUtils.getAllFields(controllerClass)) {
 			if (! field.isAnnotationPresent(FXML.class)) continue;
 			Object fieldValue = ReflectionUtils.getFieldValue(field, controller);
@@ -177,7 +194,7 @@ public class ControllerBuilder {
 		}
 	}
 
-	private <T extends AbstractController> void loadMethodMetaData(Class<T> controllerClass, T controller, ControllerMeta meta) {
+	public <T extends AbstractController> void loadMethodMetaData(Class<T> controllerClass, T controller, ControllerMeta meta) {
 
 		List<Method> actionMethods = ReflectionUtils.getMethodsWithAnnotation(controllerClass, Action.class);
 		for (Method method : actionMethods) {
@@ -191,13 +208,12 @@ public class ControllerBuilder {
 				try {
 					Platform.runLater(() -> ReflectionUtils.invokeMethod(controller, method));
 				} catch (Exception ex) {
-					Log.error("Failed to invoke the controllers action {}{}.", controllerClass.getName(), method.getName());
+					Log.error("Failed to invoke the controller action {}{}.", controllerClass.getName(), method.getName());
 					throw new IllegalStateException("Could not invoke action method " + method, ex);
 				}
 			});
 
 			meta.actionEntriesProperty().add(actionEntry);
-
 		}
 	}
 }

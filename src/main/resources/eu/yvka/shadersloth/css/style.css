@@ -151,4 +151,36 @@
 	-fx-background-insets: 4 3 4 3, 5 4 5 4;
 }
 
+/*------------------------------------------------------------------------------
+ * Textfields
+ *------------------------------------------------------------------------------*/
+
+/*
+ * Ensure that the prompt is only displayed if the user has started typing
+ */
+.text-field,
+.text-area {
+	-fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+}
+.text-field:focused,
+.text-area:focused{
+	-fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+}
+
+/*------------------------------------------------------------------------------
+ * Validation
+ *------------------------------------------------------------------------------*/
+
+.message-banner {
+	-fx-text-fill: #D50000;
+	-fx-background-color: #FF8A80;
+	-fx-background-radius: 5px;
+	-fx-border-color: #D50000;
+	-fx-border-width: 1px;
+	-fx-border-radius: 5px;
+	-fx-padding: 16px;
+	-fx-alignment: center;
+}
+
+
 

@@ -40,18 +40,23 @@ public class ReflectionUtils {
 	 * @param fieldName the name of the desired field.
 	 * @param cls  the class which owns the desired field.
 	 * @param instance the instance which has the desired field.
-     * @return the desired field or null if the given instance doesn't provide the desired field.
-     */
+	 * @return the desired field or null if the given instance doesn't provide the desired field.
+	 */
 	public static Object getFieldValue(String fieldName, Class<?> cls, Object instance) {
 		try {
-			Field field = cls.getDeclaredField(fieldName);
-			field.setAccessible(true);
+			Field field = getFieldByName(fieldName, cls);
 			return field.get(instance);
 
 		} catch (NoSuchFieldException | IllegalAccessException e) {
 			Log.warn(MessageFormat.format("\"{0}\" is not a accessible field of {1}.", fieldName, cls.getName()),e);
 		}
 		return null;
+	}
+
+	private static Field getFieldByName(String fieldName, Class<?> cls) throws NoSuchFieldException {
+		Field field = cls.getDeclaredField(fieldName);
+		field.setAccessible(true);
+		return field;
 	}
 
 	/**
@@ -91,12 +96,21 @@ public class ReflectionUtils {
 		});
 	}
 
+	public static void setFieldValue(String fieldName, Class<?> cls, Object instance, Object value) {
+		try {
+			Field field = getFieldByName(fieldName, cls);
+			setFieldValue(field, instance, value);
+		} catch (NoSuchFieldException e) {
+			Log.warn(MessageFormat.format("\"{0}\" is not a accessible field of {1}.", fieldName, cls.getName()),e);
+		}
+	}
+
 	/***
 	 * Retrieve all Fields including all fields of the super classes as well.
 	 *
 	 * @param cls the class owns the desired fields
 	 * @return a list of all declared fields including all fields of the parent classes.
-     */
+	 */
 	public static List<Field> getAllFields(Class<?> cls) {
 		List<Field> fields = new ArrayList<>();
 		Class <?> type = cls;
@@ -168,19 +182,19 @@ public class ReflectionUtils {
 	 * @param bean the context bean
 	 * @param method the method to invoke
 	 * @param params optional list of
-     */
+	 */
 	public static Object invokeMethod(Object bean, Method method, Object...params) {
 		final boolean naturalAccessState = method.isAccessible();
 		return AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
-            try {
-                method.setAccessible(true);
-               return method.invoke(bean, params);
-            } catch (InvocationTargetException | IllegalAccessException ex) {
-                throw new IllegalStateException("Could not invoke method " + method, ex);
-            } finally {
-                method.setAccessible(naturalAccessState);
-            }
-        });
+			try {
+				method.setAccessible(true);
+				return method.invoke(bean, params);
+			} catch (InvocationTargetException | IllegalAccessException ex) {
+				throw new IllegalStateException("Could not invoke method " + method, ex);
+			} finally {
+				method.setAccessible(naturalAccessState);
+			}
+		});
 	}
 
 	/**

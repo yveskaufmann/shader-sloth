@@ -1,6 +1,6 @@
 package eu.yvka.shadersloth.controls;
 
-import eu.yvka.shadersloth.ShaderSlothJavaFx;
+import eu.yvka.shadersloth.App;
 import eu.yvka.slothengine.shader.source.ShaderSource;
 import impl.org.controlsfx.skin.AutoCompletePopup;
 import javafx.beans.property.ObjectProperty;
@@ -59,7 +59,7 @@ public class ShaderEditor extends CodeArea {
 	}
 	public ShaderEditor() {
 		super();
-		getStylesheets().add(ShaderSlothJavaFx.class.getResource("css/glsl-highlighting.css").toExternalForm());
+		getStylesheets().add(App.class.getResource("css/glsl-highlighting.css").toExternalForm());
 		setParagraphGraphicFactory(LineNumberFactory.get(this));
 		textProperty().addListener((obs, oldText, newText) -> {
 			setStyleSpans(0, computeHighlighting(newText));

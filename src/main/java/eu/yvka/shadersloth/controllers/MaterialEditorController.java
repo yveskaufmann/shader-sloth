@@ -1,7 +1,7 @@
 package eu.yvka.shadersloth.controllers;
 
 import eu.yvka.shadersloth.I18N.I18N;
-import eu.yvka.shadersloth.ShaderSloth;
+import eu.yvka.shadersloth.ShaderSlothRenderer;
 import eu.yvka.shadersloth.utils.controller.AbstractController;
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.material.BasicMaterial;
@@ -64,7 +64,7 @@ public class MaterialEditorController extends AbstractController {
 
 			} else {
 				if (imageView == null) {
-					Image image = new Image(ShaderSloth.class.getResource("images/material_icon_32x32.png").toExternalForm());
+					Image image = new Image(ShaderSlothRenderer.class.getResource("images/material_icon_32x32.png").toExternalForm());
 					imageView = new ImageView(image);
 					imageView.setPreserveRatio(true);
 					imageView.setFitHeight(16);
@@ -174,7 +174,7 @@ public class MaterialEditorController extends AbstractController {
 	 ******************************************************************************/
 
 	public MaterialEditorController(ShaderSlothController controller) {
-		super(ShaderSloth.class.getResource("view/materialEditor.fxml"));
+		super(ShaderSlothRenderer.class.getResource("view/materialEditor.fxml"));
 		this.shaderSlothController = controller;
 	}
 

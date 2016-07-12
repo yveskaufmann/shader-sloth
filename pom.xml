@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>eu.yvka.shadersloth.ShaderSlothJavaFx</mainClass>
+        <mainClass>eu.yvka.shadersloth.App</mainClass>
         <slothEngineVersion>0.0.1</slothEngineVersion>
         <jdk.version>1.8</jdk.version>
         <logbackVersion>1.1.7</logbackVersion>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>8.40.10</version>
+            <version>8.40.11</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>

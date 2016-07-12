@@ -153,14 +153,14 @@ public abstract class AbstractController {
 	/**
 	 * Will be called before if controllers
 	 * is resumed from a pause state.
-	 * @deprecated
+	 *
 	 */
 	public void onResume() {
 	};
 
 	/**
 	 * Will be called before a controllers is paused.
-	 * @deprecated
+	 *
 	 */
 	public void onPause() {
 

@@ -11,9 +11,9 @@ import eu.yvka.shadersloth.controllers.ShaderSlothController;
 
 import java.util.Collections;
 
-public class ShaderSlothJavaFx extends Application {
+public class App extends Application {
 
-	private final static Logger Log = LoggerFactory.getLogger(ShaderSlothJavaFx.class);
+	private final static Logger Log = LoggerFactory.getLogger(App.class);
 	private ShaderSlothController controller;
 
 	@Override
@@ -43,7 +43,7 @@ public class ShaderSlothJavaFx extends Application {
 	}
 
 	public static void main(String[] args) {
-		Log.info("Launching ShaderSloth");
+		Log.info("Launching ShaderSlothRenderer");
 		/**
 		 * Improves the poor rendering results of javafx.
 		 *

@@ -6,7 +6,7 @@ import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.Node;
 import eu.yvka.slothengine.scene.light.AmbientLight;
 import eu.yvka.shadersloth.controls.SceneTreeCell;
-import eu.yvka.shadersloth.dialog.GeometryCreateDialog;
+import eu.yvka.shadersloth.controls.dialog.GeometryCreateDialog;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
@@ -41,7 +41,7 @@ public class TestControls extends Application {
 
 		VBox vBox = initializeScene(primaryStage);
 		Scene scene = new Scene(vBox, -1, -1, true, SceneAntialiasing.BALANCED);
-		primaryStage.setTitle("ShaderSloth");
+		primaryStage.setTitle("ShaderSlothRenderer");
 		primaryStage.setMinWidth(1024);
 		primaryStage.setHeight(768);
 		primaryStage.setScene(scene);

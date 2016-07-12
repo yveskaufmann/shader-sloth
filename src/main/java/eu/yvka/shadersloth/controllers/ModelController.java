@@ -1,6 +1,6 @@
 package eu.yvka.shadersloth.controllers;
 
-import eu.yvka.shadersloth.ShaderSloth;
+import eu.yvka.shadersloth.ShaderSlothRenderer;
 import eu.yvka.shadersloth.utils.controller.AbstractWindowController;
 import javafx.stage.WindowEvent;
 
@@ -8,7 +8,7 @@ public class ModelController extends AbstractWindowController {
 
 
 	public ModelController() {
-		super(ShaderSloth.class.getResource("view/modelEditor.fxml"));
+		super(ShaderSlothRenderer.class.getResource("view/modelEditor.fxml"));
 		setTitle("Model Editor");
 	}
 
