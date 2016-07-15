@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?scenebuilder-preview-i18n-resource ../../I18N/shadersloth.properties"?>
+
+
+<MenuBar fx:id="menuBar" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.yvka.shadersloth.app.menubar.MenuBarController">
+    <menus>
+        <Menu fx:id="fileMenu" mnemonicParsing="true" text="%menu.title.file">
+            <items>
+                <MenuItem fx:id="newMenuItem" mnemonicParsing="true" text="%menu.title.new" />
+                <SeparatorMenuItem mnemonicParsing="false" />
+                <MenuItem fx:id="openMenuItem" mnemonicParsing="true" text="%menu.title.open" />
+                <Menu fx:id="openRecentMenu" mnemonicParsing="true" text="%menu.title.open.recent">
+                </Menu>
+                <SeparatorMenuItem mnemonicParsing="false" />
+                <MenuItem fx:id="saveMenuItem" mnemonicParsing="true" text="%menu.title.save" />
+                <MenuItem fx:id="saveAsMenuItem" mnemonicParsing="false" text="%menu.title.save.as" />
+                <SeparatorMenuItem mnemonicParsing="false" />
+                <MenuItem fx:id="exitMenuItem" mnemonicParsing="true" text="%menu.title.quit" />
+            </items>
+        </Menu>
+        <Menu fx:id="helpMenu" mnemonicParsing="false" text="%menu.title.help">
+            <items>
+                <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="%menu.title.about" />
+            </items>
+        </Menu>
+    </menus>
+</MenuBar>
+

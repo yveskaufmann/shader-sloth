@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="wrapper" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="shaderSlothTheme" stylesheets="@../app/css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+       <fx:include source="menu/menubar.fxml" fx:id="menuBar"/>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.8573388203017832" orientation="VERTICAL" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <items>
+                <SplitPane dividerPositions="0.20156555772994128, 0.5469667318982387" prefHeight="194.0" prefWidth="1022.0" SplitPane.resizableWithParent="false">
+                    <items>
+                        <TabPane maxWidth="300.0" minWidth="30.0" prefWidth="200" side="LEFT" tabClosingPolicy="UNAVAILABLE" SplitPane.resizableWithParent="false">
+                            <tabs>
+                                <Tab id="materialTab" fx:id="materialTab" closable="false" text="%material.title">
+                                    <content>
+                                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+                                            <content>
+                                                <VBox>
+                                                    <children>
+                                                        <TitledPane fx:id="materialEditorRoot" animated="false" collapsible="false" maxWidth="1.7976931348623157E308" text="%material.title" />
+                                                    </children>
+                                                </VBox>
+                                            </content>
+                                        </ScrollPane>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                            <tabs>
+                                <Tab fx:id="sceneTab" closable="false" text="%scene.title">
+                                    <content>
+                                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+                                            <content>
+                                                <VBox VBox.vgrow="ALWAYS">
+                                                    <children>
+                                                        <TitledPane fx:id="sceneTreeRoot" collapsible="false" maxWidth="1.7976931348623157E308" style="-fx-background-insets: 0; -fx-border-color: transparent;" text="%scene.tree.title" />
+                                                        <TitledPane fx:id="editorRoot" animated="false" collapsible="false" maxWidth="1.7976931348623157E308" text="%editor.title" />
+                                                    </children>
+                                                </VBox>
+                                            </content>
+                                        </ScrollPane>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                        <SplitPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                            <items>
+                                <TabPane fx:id="sourceTabs" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS" SplitPane.resizableWithParent="false" />
+                            </items>
+                        </SplitPane>
+                        <AnchorPane fx:id="renderViewRoot" minHeight="256" minWidth="256" prefHeight="512" prefWidth="512" SplitPane.resizableWithParent="false">
+                            <children>
+                                <ImageView fx:id="renderView" fitHeight="480.0" fitWidth="640.0" preserveRatio="true" scaleY="-1.0" smooth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+                <TabPane maxHeight="100.0" minHeight="0.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" visible="false" SplitPane.resizableWithParent="false">
+                    <tabs>
+                        <Tab text="Untitled Tab 1">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </Tab>
+                        <Tab text="Untitled Tab 2">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>
