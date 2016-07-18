@@ -1,5 +1,6 @@
 package eu.yvka.shadersloth.app.controls.dialog;
 
+import eu.yvka.shadersloth.app.App;
 import eu.yvka.shadersloth.app.renderView.ShaderSlothRenderer;
 import eu.yvka.shadersloth.app.controls.MessageBanner;
 import eu.yvka.shadersloth.app.controls.validation.Validations;
@@ -93,7 +94,7 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 	private void initialize() {
 		setTitle(getString("geometry.create.dlg.title"));
 		setHeaderText(getString("geometry.create.dlg.header"));
-		setGraphic(new ImageView(ShaderSlothRenderer.class.getResource("images/mesh_icon_32x32.png").toExternalForm()));
+		setGraphic(new ImageView(App.class.getResource("images/mesh_icon_32x32.png").toExternalForm()));
 		setResizable(false);
 
 		messageBanner = new MessageBanner();

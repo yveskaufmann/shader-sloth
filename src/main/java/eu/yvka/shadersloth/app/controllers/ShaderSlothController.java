@@ -1,6 +1,10 @@
 package eu.yvka.shadersloth.app.controllers;
 
 import eu.yvka.shadersloth.app.App;
+import eu.yvka.shadersloth.app.project.DummyProject;
+import eu.yvka.shadersloth.app.project.Project;
+import eu.yvka.shadersloth.app.project.ProjectImpl;
+import eu.yvka.shadersloth.app.sceneEditor.SceneTreeEditorController;
 import eu.yvka.shadersloth.share.I18N.I18N;
 import eu.yvka.shadersloth.app.controllers.genericEditor.GenericEditorController;
 import eu.yvka.shadersloth.app.menubar.MenuBarController;
@@ -19,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +69,7 @@ public class ShaderSlothController extends AbstractWindowController {
 	private GenericEditorController genericEditorController = new GenericEditorController(this);
 	private MaterialEditorController materialEditorController = new MaterialEditorController(this);
 	private RenderService renderService;
+	private ObjectProperty<Project> currentProject;
 
 	/******************************************************************************
 	 *
@@ -91,13 +97,6 @@ public class ShaderSlothController extends AbstractWindowController {
 
 		initSourceView();
 		initRenderView();
-
-		renderService.sceneProperty().addListener((observable, oldValue, newValue) -> {
-			Platform.runLater(() -> {
-				if (newValue != null) loadScene(newValue);
-			});
-		});
-
 	}
 
 
@@ -106,8 +105,8 @@ public class ShaderSlothController extends AbstractWindowController {
 			sourceTabs.getTabs().clear();
 			if (newValue != null) {
 				for (ShaderSource source : newValue.getShader().getShaderSources()) {
-					String[] path = source.getName().split("/");
-					Tab tab = new Tab(path[path.length - 1]);
+					final File file = new File(source.getName());
+					Tab tab = new Tab(file.getName());
 					ShaderEditor shaderEditor = new ShaderEditor(source);
 					tab.setContent(shaderEditor);
 					sourceTabs.getTabs().add(tab);
@@ -127,7 +126,7 @@ public class ShaderSlothController extends AbstractWindowController {
 
 	@Override
 	public void onCloseRequest(WindowEvent windowEvent) {
-		stop();
+		performAction(ApplicationAction.ACTION_QUIT);
 	}
 
 	@Override
@@ -172,7 +171,14 @@ public class ShaderSlothController extends AbstractWindowController {
 	}
 
 	private void performNewProject() {
+		if (currentProject != null) {
+			// TODO: request for save
+		}
+		setProject(new DummyProject());
 
+		final Scene scene = getProject().getScene();
+		renderService.setScene(scene);
+		loadScene(scene);
 	}
 
 	private void performQuit() {
@@ -199,6 +205,7 @@ public class ShaderSlothController extends AbstractWindowController {
 			}
 
 			if (exitRequested) {
+				stop();
 				Platform.runLater(() -> {
 					if (renderService.isRunning()) {
 						renderService.cancel();
@@ -211,12 +218,12 @@ public class ShaderSlothController extends AbstractWindowController {
 
 
 	private void loadScene(Scene scene) {
+		renderService.setScene(scene);
 		sceneTreeEditor.loadScene(scene);
 	}
 
 
 	private void initRenderView() {
-
 		renderView.setPreserveRatio(true);
 		renderViewRoot.widthProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue.intValue() % 2 != 0) {
@@ -234,15 +241,41 @@ public class ShaderSlothController extends AbstractWindowController {
 		});
 	}
 
+	/***
+	 * Starts the render service.
+	 */
 	public void start() {
 		Log.info("Start ShaderSlothRenderer View");
 		renderService.start();
 	}
 
 
+	/**
+	 * Stops the render service
+	 */
 	public void stop() {
 		Log.info("Stop ShaderSlothRenderer View");
 		renderService.cancel();
+	}
+
+	/******************************************************************************
+	 *
+	 * Controller Getter
+	 *
+	 ******************************************************************************/
+
+	/**
+	 * @return the editor controller instance
+	 */
+	public GenericEditorController getGenericEditorController() {
+		return genericEditorController;
+	}
+
+	/***
+	 * @return the scene editor controller instance
+	 */
+	public SceneTreeEditorController getSceneTreeEditorController() {
+		return sceneTreeEditor;
 	}
 
 
@@ -268,25 +301,48 @@ public class ShaderSlothController extends AbstractWindowController {
 		return sceneProperty().get();
 	}
 
+
 	/**
-	 * @return the generic editor instance
+	 *
+	 * @return
+	 * @deprecated
      */
-	public GenericEditorController getGenericEditorController() {
-		return genericEditorController;
-	}
-
-	/***
-	 * @return the slothScene editor
-     */
-	public SceneTreeEditorController getSceneTreeEditor() {
-		return sceneTreeEditor;
-	}
-
 	public ObjectProperty<Scene> slothSceneProperty() {
 		if (slothScene == null) {
 			slothScene = new SimpleObjectProperty<>(this, "sceneProperty");
 		}
 		return slothScene;
+	}
+
+
+	/**
+	 * This property provides the currently active project.
+	 *
+	 * @return the property which contains the current project.
+	 */
+	public ObjectProperty<Project> currentProjectProperty() {
+		if (currentProject == null) {
+			currentProject = new SimpleObjectProperty<>(this, "currentProject");
+		}
+		return currentProject;
+	}
+
+	/**
+	 * Retrieves the current project
+	 *
+	 * @return the current project
+     */
+	public Project getProject() {
+		return currentProject == null ? null : currentProject.get();
+	}
+
+	/**
+	 * Specifies the current project.
+	 *
+	 * @param project the project which should be loaded
+     */
+	public void setProject(Project project) {
+		currentProjectProperty().set(project);
 	}
 
 

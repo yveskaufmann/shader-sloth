@@ -182,5 +182,16 @@
 	-fx-alignment: center;
 }
 
+/*------------------------------------------------------------------------------
+ * Tables
+ *------------------------------------------------------------------------------*/
+
+.column-header.align-left .label {
+	-fx-alignment: LEFT;
+}
+
+.column-header.align-right .label {
+	-fx-alignment: RIGHT;
+}
 
 

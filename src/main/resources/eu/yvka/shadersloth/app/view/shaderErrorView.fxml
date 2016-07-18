@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<?import eu.yvka.shadersloth.app.errorView.ShaderErrorTable?>
+<TabPane fx:id="errorViewPane" styleClass="theme-presets" xmlns="http://javafx.com/javafx/8.0.92" fx:controller="eu.yvka.shadersloth.app.errorView.ShaderErrorController"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <Tab fx:id="problemTabs" text="%shader.error.tab.header" closable="false">
+        <ShaderErrorTable  fx:id="errorTable"/>
+    </Tab>
+</TabPane>

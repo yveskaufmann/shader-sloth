@@ -49,8 +49,6 @@ public class ApplicationContext extends AbstractContext {
 	 *
 	 ******************************************************************************/
 
-
-
 	private Application application;
 	private DIContext diContext = null;
 	private boolean isDisposed = true;

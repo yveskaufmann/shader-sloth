@@ -32,6 +32,7 @@ public class ShaderSlothRenderer extends EngineApp implements InputListener {
 	private float rotX = 0.0f;
 	private Geometry room;
 	private Consumer<Scene> onStartedCallback;
+	private Scene activeScene;
 
 	public void setOnStartedCallback(Consumer<Scene> onStartedCallback) {
 		this.onStartedCallback = onStartedCallback;
@@ -39,7 +40,6 @@ public class ShaderSlothRenderer extends EngineApp implements InputListener {
 
 	@Override
 	protected void prepare() {
-
 		zoomLevel = 1.0f;
 		inputManager.addListener(this);
 
@@ -152,5 +152,12 @@ public class ShaderSlothRenderer extends EngineApp implements InputListener {
 				case H: room.setVisible(! room.isVisible()); break;
 			}
 		}
+	}
+
+	public void setActiveScene(Scene activeScene) {
+		Engine.runWhenReady(() -> {
+			rendererManager.setScene(activeScene);
+			this.scene = activeScene;
+		});
 	}
 }

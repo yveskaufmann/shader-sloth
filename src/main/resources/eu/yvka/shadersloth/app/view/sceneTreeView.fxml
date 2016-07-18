@@ -6,8 +6,13 @@
 <?import javafx.scene.layout.*?>
 <?import eu.yvka.shadersloth.app.controls.*?>
 
-<StackPane style="-fx-padding: 0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox style="-fx-padding: 0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-       <TreeView fx:id="sceneTree" maxHeight="300.0" prefHeight="300.0" showRoot="false" VBox.vgrow="ALWAYS" />
+       <ToolBar>
+           <Pane HBox.hgrow="ALWAYS" />
+           <Button fx:id="newEntryBtn" text="New" alignment="BASELINE_RIGHT"/>
+           <Button fx:id="removeEntryBtn" text="Remove" alignment="BASELINE_RIGHT"/>
+       </ToolBar>
+       <TreeView fx:id="sceneTree" maxHeight="300.0" minWidth="Infinity" showRoot="false" VBox.vgrow="ALWAYS" />
    </children>
-</StackPane>
+</VBox>

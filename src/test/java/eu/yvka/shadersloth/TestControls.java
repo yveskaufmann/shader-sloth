@@ -5,7 +5,7 @@ import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.Node;
 import eu.yvka.slothengine.scene.light.AmbientLight;
-import eu.yvka.shadersloth.app.controls.SceneTreeCell;
+import eu.yvka.shadersloth.app.sceneEditor.SceneTreeCell;
 import eu.yvka.shadersloth.app.controls.dialog.GeometryCreateDialog;
 import javafx.application.Application;
 import javafx.geometry.Point2D;

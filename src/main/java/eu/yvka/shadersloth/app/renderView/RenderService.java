@@ -72,9 +72,8 @@ public class RenderService extends Service<Void> {
 				settings.set(AppSettings.Width, (int) renderView.getFitWidth());
 				settings.set(AppSettings.Height, (int) renderView.getFitHeight());
 				settings.set(JavaFXOffscreenSupport.JAVAFX_OFFSCREEN_SUPPORT, new JavaFXOffscreenSupport(renderView, runningLatch));
-
 				rendererLoop = new ShaderSlothRenderer();
-				rendererLoop.setOnStartedCallback(scene -> setScene(scene));
+
 				try {
 					rendererLoop.start(settings);
 				} catch (Exception ex) {
@@ -100,7 +99,14 @@ public class RenderService extends Service<Void> {
      */
 	public ObjectProperty<Scene> sceneProperty() {
 		if (scene == null) {
-			scene = new SimpleObjectProperty<>(this, "scene");
+			scene = new SimpleObjectProperty<Scene>(this, "scene") {
+				@Override
+				protected void invalidated() {
+					if (rendererLoop != null) {
+						rendererLoop.setActiveScene(scene.get());
+					}
+				}
+			};
 		}
 		return scene;
 	}

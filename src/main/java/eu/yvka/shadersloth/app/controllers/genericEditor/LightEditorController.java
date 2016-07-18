@@ -2,7 +2,6 @@ package eu.yvka.shadersloth.app.controllers.genericEditor;
 
 import eu.yvka.shadersloth.app.App;
 import eu.yvka.shadersloth.share.I18N.I18N;
-import eu.yvka.shadersloth.app.renderView.ShaderSlothRenderer;
 import eu.yvka.shadersloth.app.controllers.ShaderSlothController;
 import eu.yvka.shadersloth.app.controls.NumberInput;
 import eu.yvka.shadersloth.share.controller.AbstractController;
@@ -41,7 +40,7 @@ public class LightEditorController extends AbstractController {
 		lightId.textProperty().addListener((currentId, oldId, newId) -> {
 			selectedNode.ifPresent((node) -> {
 				node.setId(newId);
-				slothController.getSceneTreeEditor().notifyUpdate();
+				slothController.getSceneTreeEditorController().notifyUpdate();
 			});
 		});
 		xPosition.valueProperty().addListener((observable, oldValue, newValue) -> {

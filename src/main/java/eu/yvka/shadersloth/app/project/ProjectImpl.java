@@ -10,6 +10,9 @@ import eu.yvka.slothengine.utils.NameAlreadyInUseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
 import java.util.ArrayList;
@@ -19,11 +22,11 @@ import java.util.List;
  * @Author Yves Kaufmann
  * @since 14.07.2016
  */
-@XmlRootElement(name = "project")
 public class ProjectImpl implements Project {
 
-	private String name;
-	private File projectFolder;
+	String name;
+	File projectFolder;
+
 	private List<Material> materials = new ArrayList<>();
 	private List<Texture> textures = new ArrayList<>();
 	private Scene scene = new Scene();
@@ -33,10 +36,10 @@ public class ProjectImpl implements Project {
 		return name;
 	}
 
+
 	@Override
 	public void setName(String name) throws NameAlreadyInUseException {
 		final File projectFolder = new File(AppFolder.getProjectsFolder(), name);
-		// ensureProjectNameIsUnused(projectFolder);
 		this.projectFolder = projectFolder;
 		this.name = name;
 	}
@@ -62,6 +65,7 @@ public class ProjectImpl implements Project {
 		return material;
 	}
 
+	@XmlList
 	@Override
 	public List<Material> getMaterials() {
 		return materials;
