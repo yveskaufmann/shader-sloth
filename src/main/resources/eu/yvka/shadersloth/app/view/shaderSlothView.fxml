@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import eu.yvka.shadersloth.app.errorView.ShaderErrorTable?>
+<?import eu.yvka.shadersloth.app.shaders.errors.ShaderErrorTable?>
 <BorderPane fx:id="wrapper" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="shaderSlothTheme" stylesheets="@../app/css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <top>
        <fx:include source="menu/menubar.fxml" fx:id="menuBar"/>

@@ -1,11 +1,10 @@
-package eu.yvka.shadersloth.app.errorView;
+package eu.yvka.shadersloth.app.shaders.errors;
 
 import eu.yvka.shadersloth.app.App;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 
 /**
  * @author Yves Kaufmann

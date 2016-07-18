@@ -1,19 +1,9 @@
-package eu.yvka.shadersloth.app.errorView;
+package eu.yvka.shadersloth.app.shaders.errors;
 
-import com.sun.javafx.scene.control.skin.TableViewSkin;
-import eu.yvka.shadersloth.share.I18N.I18N;
-import eu.yvka.shadersloth.share.utils.NodeUtils;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 import static eu.yvka.shadersloth.share.I18N.I18N.getString;
 
@@ -49,8 +39,6 @@ public class ShaderErrorTable extends TableView {
 
 		getColumns().setAll(descriptionColumn, shaderColumn, locationColumn);
 
-		getItems().add(ShaderError.fromShaderException());
-		getItems().add(new ShaderError("error", "Shader", 23));
 	}
 
 }

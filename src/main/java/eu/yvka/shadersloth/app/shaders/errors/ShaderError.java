@@ -1,4 +1,4 @@
-package eu.yvka.shadersloth.app.errorView;
+package eu.yvka.shadersloth.app.shaders.errors;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

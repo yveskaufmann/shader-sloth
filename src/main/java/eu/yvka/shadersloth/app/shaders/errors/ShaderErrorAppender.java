@@ -1,4 +1,4 @@
-package eu.yvka.shadersloth.app.shaders;
+package eu.yvka.shadersloth.app.shaders.errors;
 
 import ch.qos.logback.core.AppenderBase;
 

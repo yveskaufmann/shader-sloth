@@ -1,7 +1,7 @@
 package eu.yvka.shadersloth.app;
 
 import eu.yvka.shadersloth.share.context.ApplicationContext;
-import eu.yvka.shadersloth.app.shaders.ShaderErrorAppender;
+import eu.yvka.shadersloth.app.shaders.errors.ShaderErrorAppender;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
