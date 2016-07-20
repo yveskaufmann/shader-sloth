@@ -24,7 +24,7 @@
          </VBox>
       </children>
    </HBox>
-   <PropertySheet fx:id="materialProperties" VBox.vgrow="ALWAYS" maxWidth="Infinity"/>
+   <PropertySheet fx:id="materialProperties" VBox.vgrow="ALWAYS" maxWidth="Infinity" searchBoxVisible="false" modeSwitcherVisible="false" mode="NAME"/>
 </children>
 </VBox>
 

@@ -28,6 +28,7 @@ public class DummyProject extends ProjectImpl {
 
 
 	public DummyProject() {
+		super();
 		List<Geometry> boxes = new ArrayList<>();
 		final Scene scene = getScene();
 		Random rnd = new Random();
@@ -39,9 +40,11 @@ public class DummyProject extends ProjectImpl {
 		mat.setParameter("sl_material.diffuse", Color.White);
 		mat.setParameter("sl_material.ambient", Color.White);
 		mat.setShininess(20.0f);
+		getMaterials().add(mat);
 
 		Pass pass = mat.createPass();
-		pass.getRenderState().enableWireframe(true).setBlendMode(RenderState.BlendFunc.Alpha);
+		pass.getRenderState().setWireframe(true);
+		pass.getRenderState().setBlendMode(RenderState.BlendFunc.Alpha);
 		pass.setParameter("sl_material.diffuse", Color.White);
 
 		pass.setEnableLightning(false);
@@ -63,8 +66,7 @@ public class DummyProject extends ProjectImpl {
 		float R = (1.0f / boxCount);
 		for (int i = 0; i <= boxCount; i++) {
 			Geometry box = new Geometry("Box " + i);
-			material = new BasicMaterial();
-			box.setMaterial(material);
+			box.setMaterial(mat);
 			box.setScale(1.0f);
 			box.setMesh(new Sphere(1, 20, 20));
 			box.setMesh(Engine.getMeshFromAssets("Rabbit.obj"));
@@ -77,7 +79,7 @@ public class DummyProject extends ProjectImpl {
 		Geometry g = new Geometry("g");
 		g.setMesh(new Cube());
 		g.setPosition(-9.0f, 0.0f, 0.0f);
-		g.setMaterial(new BasicMaterial());
+		g.setMaterial(mat);
 		room.addChild(g);
 
 		PointLight point = new PointLight("Light 1");
@@ -92,5 +94,6 @@ public class DummyProject extends ProjectImpl {
 		point2.setPosition(new Vector3f(0.0f, 0.0f, 0.0f));
 		point2.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
 		point2.setAttenuation(20.0f);
+		getScene().add(point2);
 	}
 }

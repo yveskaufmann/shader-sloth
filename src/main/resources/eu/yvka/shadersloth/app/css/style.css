@@ -187,11 +187,11 @@
  *------------------------------------------------------------------------------*/
 
 .column-header.align-left .label {
-	-fx-alignment: LEFT;
+	-fx-alignment: center-left;
 }
 
 .column-header.align-right .label {
-	-fx-alignment: RIGHT;
+	-fx-alignment: center-right;
 }
 
 

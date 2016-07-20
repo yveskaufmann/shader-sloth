@@ -60,4 +60,9 @@ public class ShaderErrorController implements ShaderErrorListener {
 	public void onLinkError(Shader shader, String s) {
 		System.out.println("link" + s);
 	}
+
+	@Override
+	public void onResolved() {
+		errorTable.getItems().clear();
+	}
 }

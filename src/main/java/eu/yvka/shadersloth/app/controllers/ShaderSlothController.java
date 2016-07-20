@@ -3,14 +3,15 @@ package eu.yvka.shadersloth.app.controllers;
 import eu.yvka.shadersloth.app.App;
 import eu.yvka.shadersloth.app.project.DummyProject;
 import eu.yvka.shadersloth.app.project.Project;
-import eu.yvka.shadersloth.app.project.ProjectImpl;
 import eu.yvka.shadersloth.app.sceneEditor.SceneTreeEditorController;
 import eu.yvka.shadersloth.share.I18N.I18N;
 import eu.yvka.shadersloth.app.controllers.genericEditor.GenericEditorController;
 import eu.yvka.shadersloth.app.menubar.MenuBarController;
 import eu.yvka.shadersloth.app.shaders.ShaderEditor;
 import eu.yvka.shadersloth.app.renderView.RenderService;
+import eu.yvka.shadersloth.share.context.ApplicationContext;
 import eu.yvka.shadersloth.share.controller.AbstractWindowController;
+import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.scene.Scene;
 import eu.yvka.slothengine.shader.source.ShaderSource;
 import javafx.application.Platform;
@@ -23,7 +24,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +42,6 @@ public class ShaderSlothController extends AbstractWindowController {
 		ACTION_QUIT,
 		ACTION_ABOUT
 	}
-
 
 	/******************************************************************************
 	 *
@@ -97,6 +96,7 @@ public class ShaderSlothController extends AbstractWindowController {
 
 		initSourceView();
 		initRenderView();
+
 	}
 
 
@@ -174,11 +174,18 @@ public class ShaderSlothController extends AbstractWindowController {
 		if (currentProject != null) {
 			// TODO: request for save
 		}
-		setProject(new DummyProject());
 
-		final Scene scene = getProject().getScene();
+		final Project newProject = new DummyProject();
+		setProject(newProject);
+		renderService.setScene(newProject.getScene());
+		loadProject(getProject());
+	}
+
+	private void loadProject(Project project) {
+		final Scene scene = project.getScene();
 		renderService.setScene(scene);
-		loadScene(scene);
+		sceneTreeEditor.loadScene(scene);
+		materialEditorController.loadProject(project);
 	}
 
 	private void performQuit() {
@@ -217,10 +224,7 @@ public class ShaderSlothController extends AbstractWindowController {
 	}
 
 
-	private void loadScene(Scene scene) {
-		renderService.setScene(scene);
-		sceneTreeEditor.loadScene(scene);
-	}
+
 
 
 	private void initRenderView() {
@@ -247,6 +251,11 @@ public class ShaderSlothController extends AbstractWindowController {
 	public void start() {
 		Log.info("Start ShaderSlothRenderer View");
 		renderService.start();
+		Engine.runWhenReady(() -> {
+			Platform.runLater(() -> {
+				performNewProject();
+			});
+		});
 	}
 
 
@@ -344,7 +353,6 @@ public class ShaderSlothController extends AbstractWindowController {
 	public void setProject(Project project) {
 		currentProjectProperty().set(project);
 	}
-
 
 
 }

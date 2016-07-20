@@ -80,12 +80,12 @@ public class SceneTreeEditorController extends AbstractController {
 
 			if (newValue.getValue() instanceof Geometry) {
 				Geometry geometry = (Geometry) newValue.getValue();
-				geometry.getMaterial().getRenderState().enableWireframe(true);
+				// geometry.getMaterial().getRenderState().setWireframe(true);
 			}
 
 			if (oldValue != null && oldValue.getValue() instanceof Geometry) {
 				Geometry geometry = (Geometry) oldValue.getValue();
-				geometry.getMaterial().getRenderState().enableWireframe(false);
+				// geometry.getMaterial().getRenderState().setWireframe(false);
 			}
 		}));
 	}

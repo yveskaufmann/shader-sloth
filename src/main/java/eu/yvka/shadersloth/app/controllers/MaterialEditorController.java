@@ -1,8 +1,8 @@
 package eu.yvka.shadersloth.app.controllers;
 
 import eu.yvka.shadersloth.app.App;
+import eu.yvka.shadersloth.app.project.Project;
 import eu.yvka.shadersloth.share.I18N.I18N;
-import eu.yvka.shadersloth.app.renderView.ShaderSlothRenderer;
 import eu.yvka.shadersloth.share.controller.AbstractController;
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.material.BasicMaterial;
@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /***
  * Controller for editing and creating materials
@@ -168,6 +169,12 @@ public class MaterialEditorController extends AbstractController {
 	 */
 	private final ShaderSlothController shaderSlothController;
 
+	/**
+	 * The current loaded project
+	 *
+     */
+	private  Project project;
+
 	/******************************************************************************
 	 *
 	 * Constructors
@@ -192,7 +199,7 @@ public class MaterialEditorController extends AbstractController {
 		materialList.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
 			if (newSelection != null && newSelection != oldSelection) {
 				selectedMaterial.set(newSelection);
-				loadMaterial(newSelection);
+				readMaterialProperties(newSelection);
 			}
 		});
 
@@ -206,20 +213,35 @@ public class MaterialEditorController extends AbstractController {
 
 	}
 
-	private void loadMaterial(Material material) {
-		materialProperties.getItems().clear();
+
+	public void loadProject(Project project) {
+		this.project = project;
+		materialList.getItems().setAll(project.getMaterials());
+		if (! materialList.getItems().isEmpty()) {
+			materialList.getSelectionModel().selectFirst();
+		}
+
+	}
+
+	private void readMaterialProperties(Material material) {
 		try {
-			materialProperties.getItems().addAll(buildMaterialPropertiesItems(material));
+			materialProperties.getItems().setAll(buildMaterialPropertiesItems(material));
+			materialProperties.setDisable(false);
 		} catch (IntrospectionException | NoSuchMethodException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private ObservableList<PropertySheet.Item> buildMaterialPropertiesItems(Material material) throws IntrospectionException, NoSuchMethodException {
-		ObservableList<PropertySheet.Item> items = FXCollections.observableArrayList();
+		ObservableList<PropertySheet.Item> properties = BeanPropertyUtils.getProperties(material.getRenderState(), propertyDescriptor -> {
+			return propertyDescriptor.getWriteMethod() != null;
+		});
 
-		items.addAll(BeanPropertyUtils.getProperties(material.getRenderState()));
+		properties.addAll(BeanPropertyUtils.getProperties(material));
 
+
+
+		/*
 		material.setParameter("test", Color.Black);
 		for (MaterialParameter parameter : material.getMaterialParameters().values()) {
 			PropertyDescriptor descriptor = new PropertyDescriptor(parameter.getName(), MaterialParameter.class, "getValue", "setValue");
@@ -227,7 +249,9 @@ public class MaterialEditorController extends AbstractController {
 			items.add(pItem);
 		}
 
-		return items;
+		*/
+
+		return properties;
 	}
 
 	private void deleteCurrentMaterial() {
@@ -243,6 +267,8 @@ public class MaterialEditorController extends AbstractController {
 	}
 
 	private void createNewMaterial() {
+		assert project != null;
+
 		String name;
 		Material material = new BasicMaterial();
 
@@ -258,6 +284,7 @@ public class MaterialEditorController extends AbstractController {
             new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
         }
 
+		project.getMaterials().add(material);
 		materialList.getItems().add(material);
 		materialList.getSelectionModel().selectLast();
 	}
