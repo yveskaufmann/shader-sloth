@@ -41,5 +41,11 @@
                 <include>*.jar</include>
             </includes>
         </fileSet>
+
+        <fileSet>
+            <directory>assets</directory>
+            <outputDirectory>assets</outputDirectory>
+        </fileSet>
+
     </fileSets>
 </assembly>
