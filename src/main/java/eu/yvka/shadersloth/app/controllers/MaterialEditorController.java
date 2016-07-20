@@ -2,6 +2,7 @@ package eu.yvka.shadersloth.app.controllers;
 
 import eu.yvka.shadersloth.app.App;
 import eu.yvka.shadersloth.app.project.Project;
+import eu.yvka.shadersloth.app.sceneEditor.PropertyEditors;
 import eu.yvka.shadersloth.share.I18N.I18N;
 import eu.yvka.shadersloth.share.controller.AbstractController;
 import eu.yvka.slothengine.engine.Engine;
@@ -20,9 +21,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.BeanProperty;
 import org.controlsfx.property.BeanPropertyUtils;
+import org.controlsfx.property.editor.DefaultPropertyEditorFactory;
+import org.controlsfx.property.editor.Editors;
+import org.controlsfx.property.editor.PropertyEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -211,6 +216,21 @@ public class MaterialEditorController extends AbstractController {
 			deleteCurrentMaterial();
 		});
 
+		materialProperties.setPropertyEditorFactory(new DefaultPropertyEditorFactory() {
+			@Override
+			public PropertyEditor<?> call(PropertySheet.Item item) {
+				PropertyEditor<?> propertyEditor = null;
+				propertyEditor = super.call(item);
+				if (propertyEditor == null) {
+					Class<?> type = item.getType();
+					if (type == Color.class) {
+						propertyEditor = PropertyEditors.createColorEditor(item);
+					}
+				}
+				return propertyEditor;
+			}
+		});
+
 	}
 
 
@@ -237,7 +257,13 @@ public class MaterialEditorController extends AbstractController {
 			return propertyDescriptor.getWriteMethod() != null;
 		});
 
-		properties.addAll(BeanPropertyUtils.getProperties(material));
+		properties.addAll(BeanPropertyUtils.getProperties(material, (propertyDescriptor) -> {
+			return (propertyDescriptor.getPropertyType().equals(Number.class)
+			|| propertyDescriptor.getPropertyType().equals(Color.class)
+			|| propertyDescriptor.getPropertyType().isPrimitive()) &&
+				!propertyDescriptor.getPropertyType().equals(Boolean.TYPE);
+
+		}));
 
 
 
