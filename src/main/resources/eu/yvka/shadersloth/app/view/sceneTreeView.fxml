@@ -10,7 +10,12 @@
    <children>
        <ToolBar>
            <Pane HBox.hgrow="ALWAYS" />
-           <Button fx:id="newEntryBtn" text="New" alignment="BASELINE_RIGHT"/>
+           <MenuButton  fx:id="newEntryBtn" text="New" alignment="BASELINE_RIGHT">
+               <items>
+                <MenuItem fx:id="newGeometryBtn" text="New Geometry"/>
+                <MenuItem fx:id="newLightBtn" text="New Light"/>
+               </items>
+           </MenuButton>
            <Button fx:id="removeEntryBtn" text="Remove" alignment="BASELINE_RIGHT"/>
        </ToolBar>
        <TreeView fx:id="sceneTree" maxHeight="300.0" minWidth="Infinity" showRoot="false" VBox.vgrow="ALWAYS" />

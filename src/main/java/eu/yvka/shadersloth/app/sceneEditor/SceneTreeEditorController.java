@@ -2,17 +2,18 @@ package eu.yvka.shadersloth.app.sceneEditor;
 
 import eu.yvka.shadersloth.app.App;
 import eu.yvka.shadersloth.app.controllers.ShaderSlothController;
-import eu.yvka.shadersloth.app.controls.dialog.GeometryCreateDialog;
 import eu.yvka.shadersloth.app.project.Project;
 import eu.yvka.shadersloth.share.controller.AbstractController;
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.Node;
 import eu.yvka.slothengine.scene.Scene;
+import eu.yvka.slothengine.scene.light.Light;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Supplier;
 
 public class SceneTreeEditorController extends AbstractController {
 
@@ -33,8 +35,10 @@ public class SceneTreeEditorController extends AbstractController {
 	 ******************************************************************************/
 
 	@FXML private TreeView<Node> sceneTree;
-	@FXML private Button newEntryBtn;
+	@FXML private MenuButton newEntryBtn;
 	@FXML private Button removeEntryBtn;
+	@FXML private MenuItem newGeometryBtn;
+	@FXML private MenuItem newLightBtn;
 
 	/******************************************************************************
 	 *
@@ -58,11 +62,11 @@ public class SceneTreeEditorController extends AbstractController {
 
 	@Override
 	protected void onFxmlLoaded() {
-		newEntryBtn.setOnAction(this::onNewEntry);
+		newGeometryBtn.setOnAction(buildNodeCreationHandler(GeometryCreateDialog::new));
+		newLightBtn.setOnAction(buildNodeCreationHandler(LightCreateDialog::new));
 		removeEntryBtn.setOnAction(this::onRemoveEntry);
 		initTree();
 	}
-
 
 	private void initTree() {
 		sceneTree.setMinWidth(50);
@@ -90,16 +94,16 @@ public class SceneTreeEditorController extends AbstractController {
 		}));
 	}
 
+
 	private ContextMenu createTreeContextMenu() {
 		Menu newMenu = new Menu("New");
 		MenuItem newModel = new MenuItem("Model");
 		MenuItem light = new MenuItem("Light");
 		MenuItem geometry = new MenuItem("Geometry");
 
-		newMenu.setOnAction((event -> {
 
 
-		}));
+
 		newMenu.getItems().setAll(newModel, light, geometry);
 
 		ContextMenu contextMenu = new ContextMenu();
@@ -117,25 +121,41 @@ public class SceneTreeEditorController extends AbstractController {
 	 *
 	 ******************************************************************************/
 
-	private void onNewEntry(ActionEvent event) {
-		final Project project = getProject();
-		final Scene scene = project.getScene();
-		GeometryCreateDialog dialog = new GeometryCreateDialog();
-		dialog.initOwner(sceneTree.getScene().getWindow());
-		dialog.showAndWait().ifPresent((geometry -> {
-			TreeItem<Node> root = sceneTree.getRoot();
-			TreeItem<Node> newItem = new TreeItem<>(geometry);
-			if (root == null) {
-				sceneTree.setRoot(newItem);
-				scene.setRootNode(geometry);
-			} else {
-				sceneTree.getRoot().getChildren().add(newItem);
-				scene.getRootNode().addChild(geometry);
-			}
-
-
-		}));
+	private EventHandler<ActionEvent> buildNodeCreationHandler(Supplier<Dialog<? extends Node>> dialogFactory) {
+		return (e) -> {
+			final Project project = getProject();
+			final Scene scene = project.getScene();
+			final Dialog<? extends  Node> dialog = dialogFactory.get();
+			dialog.initOwner(sceneTree.getScene().getWindow());
+			dialog.showAndWait().ifPresent((geometry -> {
+				addNodeToTree(scene, geometry);
+			}));
+		};
 	}
+
+	private void addNodeToTree(Scene scene, Node node) {
+		TreeItem<Node> root = sceneTree.getRoot();
+		TreeItem<Node> newItem = new TreeItem<>(node);
+		if (root == null) {
+            sceneTree.setRoot(newItem);
+            scene.setRootNode(node);
+        } else {
+            sceneTree.getRoot().getChildren().add(newItem);
+            scene.getRootNode().addChild(node);
+        }
+
+		if (node instanceof Light) {
+			scene.getLightList().add((Light) node);
+		}
+	}
+
+	/******************************************************************************
+	 *
+	 * Methods
+	 *
+	 ******************************************************************************/
+
+
 
 	private void onRemoveEntry(ActionEvent event) {
 		final TreeItem<Node> selection = sceneTree.getSelectionModel().getSelectedItem();
@@ -153,12 +173,6 @@ public class SceneTreeEditorController extends AbstractController {
 			}
 		}
 	}
-
-	/******************************************************************************
-	 *
-	 * Methods
-	 *
-	 ******************************************************************************/
 
 	/**
 	 * Load the scene and create a representation in the project tree.

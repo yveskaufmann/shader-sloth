@@ -1,4 +1,4 @@
-package eu.yvka.shadersloth.app.geometry;
+package eu.yvka.shadersloth.app.sceneEditor;
 
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.geometry.Mesh;

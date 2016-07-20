@@ -1,10 +1,8 @@
-package eu.yvka.shadersloth.app.controls.dialog;
+package eu.yvka.shadersloth.app.sceneEditor;
 
 import eu.yvka.shadersloth.app.App;
-import eu.yvka.shadersloth.app.renderView.ShaderSlothRenderer;
 import eu.yvka.shadersloth.app.controls.MessageBanner;
 import eu.yvka.shadersloth.app.controls.validation.Validations;
-import eu.yvka.shadersloth.app.geometry.LoadMeshTask;
 import eu.yvka.slothengine.geometry.primitives.Cube;
 import eu.yvka.slothengine.geometry.primitives.Sphere;
 import eu.yvka.slothengine.scene.Geometry;
@@ -59,7 +57,7 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 	private MessageBanner messageBanner;
 
 	/* Basic Dialog  */
-	private GridPane rootGrid;
+	private FormPane rootGrid;
 	private TextField geometryId;
 	private ChoiceBox<GeometryCreateDialog.GeometryType> modelTypeChoice;
 
@@ -124,14 +122,15 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 		col3.setHalignment(HPos.LEFT);
 		col3.setPercentWidth(5);
 
-		rootGrid = new GridPane();
+		rootGrid = new FormPane();
 		rootGrid.getColumnConstraints().addAll(col1, col2, col3);
 		rootGrid.setAlignment(Pos.CENTER);
 		rootGrid.setHgap(5);
 		rootGrid.setVgap(5);
 
-		addFormEntry(0, 1, geometryIdLabel, geometryId);
-		addFormEntry(0, 2, geometryTypeLabel, modelTypeChoice);
+		rootGrid.addFormEntry(0, 1, geometryIdLabel, geometryId);
+		rootGrid.addFormEntry(0, 2, geometryTypeLabel, modelTypeChoice);
+
 		VBox content = new VBox(5, messageBanner, rootGrid);
 		content.setAlignment(Pos.TOP_CENTER);
 		getDialogPane().setContent(content);
@@ -232,7 +231,7 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 
 	private void showCubeEditor() {
 		String cubeSizeLabel = getString("geometry.create.dlg.cube.size.label");
-		addFormEntry(0, 3, cubeSizeLabel, cubesizeField);
+		rootGrid.addFormEntry(0, 3, cubeSizeLabel, cubesizeField);
 
 		if (! validationSupport.getRegisteredControls().contains(cubesizeField)) {
 			validationSupport.registerValidator(cubesizeField, false, Validations.createMinimumValidator(cubeSizeLabel, 1.0));
@@ -244,9 +243,9 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 		String ringsLabel = getString("geometry.create.dlg.sphere.rings.label");
 		String segmentsLabel= getString("geometry.create.dlg.sphere.segments.label");
 
-		addFormEntry(0, 3, radiusLabel, radiusField);
-		addFormEntry(0, 4, ringsLabel, ringsField);
-		addFormEntry(0, 5, segmentsLabel, segmentsField);
+		rootGrid.addFormEntry(0, 3, radiusLabel, radiusField);
+		rootGrid.addFormEntry(0, 4, ringsLabel, ringsField);
+		rootGrid.addFormEntry(0, 5, segmentsLabel, segmentsField);
 
 		if (! validationSupport.getRegisteredControls().contains(radiusField)) {
 			validationSupport.registerValidator(radiusField, true, Validations.createEmptyValidator(radiusLabel));
@@ -256,7 +255,7 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 	}
 
 	private void showObjectFileEditor() {
-		addFormEntry(0, 3, getString("geometry.create.dlg.file.label"), pathToMeshTextfield, fileChooserButton);
+		rootGrid.addFormEntry(0, 3, getString("geometry.create.dlg.file.label"), pathToMeshTextfield, fileChooserButton);
 	}
 
 	public Collection<FileChooser.ExtensionFilter> getSupportedExtensions() {
@@ -311,15 +310,6 @@ public class GeometryCreateDialog extends Dialog<Geometry> {
 	 *
 	 ******************************************************************************/
 
-	private void addFormEntry(int col, int row, String labelText, Control ...controls) {
-		Label label = new Label(labelText);
-		label.setAlignment(Pos.BASELINE_LEFT);
-		rootGrid.add(label, col, row);
-		col = col + 1;
-		for (int i = 0; i < controls.length; i++) {
-			rootGrid.add(controls[i], col + i, row);
-		}
-	}
 
 	private TextField createNumberOnlyTextfield(double defaultSize) {
 		TextField textField = new TextField();
