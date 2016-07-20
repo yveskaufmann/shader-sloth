@@ -66,12 +66,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.20</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.20</version>
+            <version>1.7.21</version>
         </dependency>
       <!--  <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -199,6 +194,22 @@
                     <descriptor>
                         src/main/assembly/assembly.xml
                     </descriptor>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <classpathScope>runtime</classpathScope>
+                    <executable>java</executable>
+                    <commandlineArgs>-classpath %classpath ${mainClass}</commandlineArgs>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,19 +1,15 @@
 package eu.yvka.shadersloth.app.shaders.errors;
 
-import ch.qos.logback.core.AppenderBase;
-
 import java.util.List;
 
 /**
  * @Author Yves Kaufmann
  * @since 13.07.2016
  */
-public class ShaderErrorAppender<E> extends AppenderBase<E> {
+public class ShaderErrorAppender<E> {
 
 	private List<E> list;
 
-	@Override
-	synchronized
 	protected void append(E eventObject) {
 		list.add(eventObject);
 	}

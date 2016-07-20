@@ -1,17 +1,15 @@
 package eu.yvka.shadersloth.app;
 
+import eu.yvka.shadersloth.app.controllers.ShaderSlothController;
 import eu.yvka.shadersloth.share.context.ApplicationContext;
-import eu.yvka.shadersloth.app.shaders.errors.ShaderErrorAppender;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.controlsfx.dialog.ExceptionDialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import eu.yvka.shadersloth.app.controllers.ShaderSlothController;
 
 import java.util.Collections;
-import java.util.LinkedList;
 
 public class App extends Application {
 
@@ -20,11 +18,6 @@ public class App extends Application {
 
 	@Override
 	public void init() throws Exception {
-		if (Log instanceof ch.qos.logback.classic.Logger) {
-			ch.qos.logback.classic.Logger logBackLogger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-			ShaderErrorAppender appender = (ShaderErrorAppender) logBackLogger.getAppender("ShaderErrorAppender");
-			appender.setModel(new LinkedList());
-		}
 
 		ApplicationContext.get().init(this, () -> Collections.emptyList());
 		Runtime.getRuntime().addShutdownHook(new Thread(ApplicationContext.get()::destroy));
