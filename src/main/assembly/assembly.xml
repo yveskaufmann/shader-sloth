@@ -2,6 +2,7 @@
     <id>bin</id>
     <!-- Specifies that our binary distribution is a zip package -->
     <formats>
+        <format>dir</format>
         <format>zip</format>
     </formats>
 
@@ -25,7 +26,7 @@
         -->
         <fileSet>
             <directory>${project.build.scriptSourceDirectory}</directory>
-            <outputDirectory></outputDirectory>
+            <outputDirectory/>
             <includes>
                 <include>startup.*</include>
             </includes>
@@ -36,7 +37,7 @@
         -->
         <fileSet>
             <directory>${project.build.directory}</directory>
-            <outputDirectory></outputDirectory>
+            <outputDirectory/>
             <includes>
                 <include>*.jar</include>
             </includes>
