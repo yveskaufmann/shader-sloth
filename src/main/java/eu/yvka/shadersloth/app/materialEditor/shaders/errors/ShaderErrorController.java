@@ -1,4 +1,4 @@
-package eu.yvka.shadersloth.app.shaders.errors;
+package eu.yvka.shadersloth.app.materialEditor.shaders.errors;
 
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.shader.Shader;

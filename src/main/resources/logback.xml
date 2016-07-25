@@ -22,7 +22,7 @@
         </encoder>
     </appender>
 
-    <appender name="ShaderErrorAppender" class="eu.yvka.shadersloth.app.shaders.errors.ShaderErrorAppender"/>
+    <appender name="ShaderErrorAppender" class="eu.yvka.shadersloth.app.materialEditor.shaders.errors.ShaderErrorAppender"/>
 
     <root level="DEBUG">
         <appender-ref ref="STDOUT" />

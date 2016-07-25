@@ -1,7 +1,7 @@
-package eu.yvka.shadersloth.app.controllers.genericEditor;
+package eu.yvka.shadersloth.app.sceneEditor.genericEditor;
 
 import eu.yvka.shadersloth.app.App;
-import eu.yvka.shadersloth.app.controllers.ShaderSlothController;
+import eu.yvka.shadersloth.app.ShaderSlothController;
 import eu.yvka.shadersloth.share.controller.AbstractController;
 import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.Node;
@@ -12,14 +12,15 @@ import javafx.scene.layout.StackPane;
 public class GenericEditorController extends AbstractController {
 
 	private ShaderSlothController slothController;
-	private ModelEditorController modelEditorController;
+	private GeometryEditorController geometryEditorController;
 	private LightEditorController lightEditorController;
 	private AbstractController activeController;
+	private Node currentNode = null;
 
 	public GenericEditorController(ShaderSlothController controller) {
 		super(App.class.getResource("view/genericEditor.fxml"));
 		this.slothController = controller;
-		modelEditorController = new ModelEditorController(controller);
+		geometryEditorController = new GeometryEditorController(controller);
 		lightEditorController = new LightEditorController(controller);
 	}
 
@@ -28,14 +29,15 @@ public class GenericEditorController extends AbstractController {
 
 	public void loadNode(Node node) {
 		assert node != null;
+		currentNode = node;
 		StackPane container = (StackPane) getRoot();
 		if (node instanceof Geometry) {
-			if (activeController != modelEditorController) {
+			if (activeController != geometryEditorController) {
 				container.getChildren().clear();
-				container.getChildren().add(modelEditorController.getRoot());
-				activeController = modelEditorController;
+				container.getChildren().add(geometryEditorController.getRoot());
+				activeController = geometryEditorController;
 			}
-			modelEditorController.updateData((Geometry) node);
+			geometryEditorController.updateData((Geometry) node);
 		}
 
 		if (node instanceof Light) {
@@ -45,6 +47,12 @@ public class GenericEditorController extends AbstractController {
 				activeController = lightEditorController;
 			}
 			lightEditorController.updateData((Light) node);
+		}
+	}
+
+	public void refresh() {
+		if (currentNode != null) {
+			loadNode(currentNode);
 		}
 	}
 }

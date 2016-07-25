@@ -1,12 +1,13 @@
-package eu.yvka.shadersloth.app.controllers.genericEditor;
+package eu.yvka.shadersloth.app.sceneEditor.genericEditor;
 
 import eu.yvka.shadersloth.app.App;
 import eu.yvka.shadersloth.share.I18N.I18N;
-import eu.yvka.shadersloth.app.controllers.ShaderSlothController;
+import eu.yvka.shadersloth.app.ShaderSlothController;
 import eu.yvka.shadersloth.app.controls.NumberInput;
 import eu.yvka.shadersloth.share.controller.AbstractController;
 import eu.yvka.slothengine.math.Color;
 import eu.yvka.slothengine.scene.light.Light;
+import eu.yvka.slothengine.scene.light.LightType;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
@@ -64,13 +65,11 @@ public class LightEditorController extends AbstractController {
 		lightEnergySlider.setMin(0.0);
 		lightEnergySlider.setMax(10.0);
 		lightEnergySlider.setBlockIncrement(0.1);
-		lightEnergySlider.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
-			lightEnergy.setValue(newValue1.doubleValue());
-		});
 
 
 		lightEnergy.setMaxValue(10.0);
 		lightEnergy.setMinValue(0.0);
+		lightEnergy.valueProperty().bindBidirectional(lightEnergySlider.valueProperty());
 		lightEnergy.valueProperty().addListener((observable, oldValue, newValue) -> {
 			lightEnergySlider.setValue(newValue.doubleValue());
 			selectedNode.ifPresent((node) -> {
@@ -80,9 +79,10 @@ public class LightEditorController extends AbstractController {
 
 		lightTypeChoice.getItems().addAll(
 			I18N.getString("light.type.point"),
-			I18N.getString("light.type.direction"),
 			I18N.getString("light.type.ambient")
 		);
+		// only view able but not change able
+		lightTypeChoice.setDisable(true);
 		lightTypeChoice.getSelectionModel().selectFirst();
 
 	}
@@ -94,6 +94,7 @@ public class LightEditorController extends AbstractController {
 		yPosition.setValue(node.getPosition().y);
 		zPosition.setValue(node.getPosition().z);
 		lightEnergy.setValue(node.getAttenuation());
+		lightTypeChoice.setValue(node.getType().equals(LightType.Ambient) ? lightTypeChoice.getItems().get(1) : lightTypeChoice.getItems().get(0));
 
 
 		Color color = node.getColor();

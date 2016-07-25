@@ -1,6 +1,5 @@
 package eu.yvka.shadersloth.app;
 
-import eu.yvka.shadersloth.app.controllers.ShaderSlothController;
 import eu.yvka.shadersloth.share.context.ApplicationContext;
 import javafx.application.Application;
 import javafx.application.Platform;

@@ -7,14 +7,14 @@
 <?import eu.yvka.shadersloth.app.controls.*?>
 
 <GridPane maxWidth="Infinity" fx:id="geometryEditor" hgap="2.0" vgap="2.0" xmlns="http://javafx.com/javafx/8"
-          xmlns:fx="http://javafx.com/fxml/1">
+          xmlns:fx="http://javafx.com/fxml/1" styleClass="editor">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="82.0"/>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="82.0"/>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="81.0"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints vgrow="NEVER"/>
+        <RowConstraints vgrow="NEVER" />
         <RowConstraints vgrow="NEVER"/>
         <RowConstraints vgrow="NEVER"/>
         <RowConstraints vgrow="NEVER"/>
@@ -28,24 +28,32 @@
     </rowConstraints>
     <children>
 
-        <Label fx:id="nodeIdLabel" text="Geometry Id" GridPane.rowIndex="1" GridPane.columnSpan="2" />
-        <TextField fx:id="nodeId" promptText="Geometry Id" GridPane.columnSpan="3" GridPane.rowIndex="2"/>
+        <Label fx:id="nodeIdLabel" text="%editor.id" GridPane.rowIndex="1" GridPane.columnSpan="2" styleClass="caption" />
+        <TextField fx:id="nodeId" promptText="%geometry.id.prompt" GridPane.columnSpan="3" GridPane.rowIndex="2" >
+            <GridPane.margin>
+                <Insets top="0" right="0" bottom="5" left="0"></Insets>
+            </GridPane.margin>
+        </TextField>
 
-        <Label text="Material" GridPane.columnSpan="2" GridPane.rowIndex="3"/>
-        <ChoiceBox fx:id="materialChooser" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="3" GridPane.rowIndex="4"/>
+        <Label text="%geometry.material" GridPane.columnSpan="2" GridPane.rowIndex="3" styleClass="caption"/>
+        <ChoiceBox fx:id="materialChooser" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="3" GridPane.rowIndex="4" >
+            <GridPane.margin>
+                <Insets top="0" right="0" bottom="5" left="0"></Insets>
+            </GridPane.margin>
+        </ChoiceBox>
 
-        <Label text="Position" GridPane.columnSpan="2" GridPane.rowIndex="5"/>
-        <NumberInput fx:id="xPosition" alignment="CENTER_LEFT" label="X" promptText="X" GridPane.rowIndex="6"/>
-        <NumberInput fx:id="yPosition" alignment="CENTER_LEFT" label="Y" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-        <NumberInput fx:id="zPosition" alignment="CENTER_LEFT" label="Z" promptText="Z" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+        <Label text="%editor.position" GridPane.columnSpan="2" GridPane.rowIndex="5" styleClass="caption"/>
+        <NumberInput fx:id="xPosition" alignment="CENTER_LEFT" label="X" promptText="X" GridPane.rowIndex="6" styleClass="caption"/>
+        <NumberInput fx:id="yPosition" alignment="CENTER_LEFT" label="Y" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <NumberInput fx:id="zPosition" alignment="CENTER_LEFT" label="Z" promptText="Z" GridPane.columnIndex="2" GridPane.rowIndex="6" />
 
 
-        <Label text="Rotation" GridPane.columnSpan="2" GridPane.rowIndex="7"/>
+        <Label text="%editor.rotation" GridPane.columnSpan="2" GridPane.rowIndex="7" styleClass="caption" />
         <NumberInput fx:id="xRotation" alignment="CENTER_LEFT" label="X" promptText="X" GridPane.rowIndex="8"/>
         <NumberInput fx:id="yRotation" alignment="CENTER_LEFT" label="Y" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
         <NumberInput fx:id="zRotation" alignment="CENTER_LEFT" label="Z" promptText="Z" GridPane.columnIndex="2" GridPane.rowIndex="8"/>
 
-        <Label text="Skalierung" GridPane.columnSpan="2" GridPane.rowIndex="9"/>
+        <Label text="%editor.scale" GridPane.columnSpan="2" GridPane.rowIndex="9" styleClass="caption"/>
         <NumberInput fx:id="xScale" alignment="CENTER_LEFT" label="X" promptText="X" GridPane.rowIndex="10"/>
         <NumberInput fx:id="yScale" alignment="CENTER_LEFT" label="Y" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
         <NumberInput fx:id="zScale" alignment="CENTER_LEFT" label="Z" promptText="Z" GridPane.columnIndex="2" GridPane.rowIndex="10"/>

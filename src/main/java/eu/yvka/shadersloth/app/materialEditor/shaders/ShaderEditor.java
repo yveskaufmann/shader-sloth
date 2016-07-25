@@ -1,4 +1,4 @@
-package eu.yvka.shadersloth.app.shaders;
+package eu.yvka.shadersloth.app.materialEditor.shaders;
 
 import eu.yvka.shadersloth.app.App;
 import eu.yvka.slothengine.shader.source.ShaderSource;

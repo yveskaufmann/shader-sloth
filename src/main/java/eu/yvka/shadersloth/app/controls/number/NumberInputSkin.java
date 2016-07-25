@@ -68,6 +68,8 @@ public class NumberInputSkin extends BehaviorSkinBase<NumberInput, NumberInputBe
 		label.setAlignment(Pos.CENTER_LEFT);
 		label.setLabelFor(textField);
 		label.setPadding(new Insets(0, 0, 0, 3));
+		label.setVisible(false);
+		label.setManaged(false);
 
 		setUpTextFormatter();
 		textField.setTextFormatter(formatter);
@@ -158,6 +160,11 @@ public class NumberInputSkin extends BehaviorSkinBase<NumberInput, NumberInputBe
 	public void showLabel(String labelText) {
 		if (!"".equals(labelText.trim())) {
 			label.setText(labelText + ":");
+			label.setVisible(true);
+			label.setManaged(true);
+		} else {
+			label.setVisible(false);
+			label.setManaged(false);
 		}
 	}
 }

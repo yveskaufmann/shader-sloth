@@ -82,7 +82,7 @@ public class TestControls extends Application {
 			@Override
 			public TreeCell<Node> call(TreeView<Node> param) {
 
-				TreeCell<Node> treeCell = new SceneTreeCell();
+				TreeCell<Node> treeCell = new SceneTreeCell(null);
 
 				treeCell.setOnDragDetected(event -> {
 

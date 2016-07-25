@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
 
-<?import eu.yvka.shadersloth.app.shaders.errors.ShaderErrorTable?>
-<TabPane fx:id="errorViewPane" styleClass="theme-presets" xmlns="http://javafx.com/javafx/8.0.92" fx:controller="eu.yvka.shadersloth.app.shaders.errors.ShaderErrorController"
+<?import eu.yvka.shadersloth.app.materialEditor.shaders.errors.ShaderErrorTable?>
+<TabPane fx:id="errorViewPane" styleClass="theme-presets" xmlns="http://javafx.com/javafx/8.0.92" fx:controller="eu.yvka.shadersloth.app.materialEditor.shaders.errors.ShaderErrorController"
          xmlns:fx="http://javafx.com/fxml/1">
     <Tab fx:id="problemTabs" text="%shader.error.tab.header" closable="false">
         <ShaderErrorTable  fx:id="errorTable"/>

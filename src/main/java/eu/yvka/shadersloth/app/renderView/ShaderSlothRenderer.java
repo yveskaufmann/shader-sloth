@@ -17,6 +17,8 @@ import eu.yvka.slothengine.scene.Node;
 import eu.yvka.slothengine.scene.Scene;
 import eu.yvka.slothengine.scene.camera.FreeCamera;
 import eu.yvka.slothengine.scene.light.PointLight;
+import javafx.geometry.Pos;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class ShaderSlothRenderer extends EngineApp implements InputListener {
 	private float zoomLevel;
 	private Consumer<Scene> onStartedCallback;
 	private Scene activeScene;
+	private Vector2f mousePos;
 
 	public void setOnStartedCallback(Consumer<Scene> onStartedCallback) {
 		this.onStartedCallback = onStartedCallback;
@@ -54,6 +57,7 @@ public class ShaderSlothRenderer extends EngineApp implements InputListener {
 
 	@Override
 	public void onMouseEvent(MouseEvent event) {
+		mousePos = new Vector2f((float) event.getX(), (float) event.getY());
 	}
 
 	@Override

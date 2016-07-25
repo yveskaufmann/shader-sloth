@@ -2,7 +2,7 @@ package eu.yvka.shadersloth.app.menubar;
 
 import com.google.inject.Inject;
 import eu.yvka.shadersloth.share.I18N.I18N;
-import eu.yvka.shadersloth.app.controllers.ShaderSlothController;
+import eu.yvka.shadersloth.app.ShaderSlothController;
 import eu.yvka.shadersloth.app.preferences.GlobalUserPreferences;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static eu.yvka.shadersloth.app.controllers.ShaderSlothController.*;
+import static eu.yvka.shadersloth.app.ShaderSlothController.*;
 
 /**
  * Controller which is responsible to handle

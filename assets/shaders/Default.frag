@@ -16,7 +16,6 @@ uniform struct Light {
 	int type;
 } sl_lights[MAX_COLORS];
 
-
 uniform struct Material {
     vec4 ambient;
     vec4 diffuse;
@@ -37,7 +36,7 @@ vec3 calcLightning(Light light, vec3 texelColor, vec3 normal, vec3 pos, vec3 cam
 
     float attenuation = 1.0 / (1.0 + light.attenuation * pow(distanceToLight, 2));
 
-    vec3 ambient = texelColor.rgb * light.color.rgb;
+    vec3 ambient = texelColor.rgb * light.color.rgb * attenuation;
 
     float diffuseIntensity = max(dot(normal, lightDir), 0.3);
     vec3 diffuse = diffuseIntensity * texelColor.rgb * light.color.rgb;
@@ -64,6 +63,6 @@ void main() {
 
     texelColor *= sl_material.ambient.rgb;
     vec3 gamma = vec3(1.0/2.2);
-    fragmentColor = vec4(texelColor, color.a);
+    fragmentColor = vec4(texelColor , color.a);
 
 }

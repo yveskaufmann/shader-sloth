@@ -1,6 +1,7 @@
-package eu.yvka.shadersloth.app.controllers;
+package eu.yvka.shadersloth.app.materialEditor;
 
 import eu.yvka.shadersloth.app.App;
+import eu.yvka.shadersloth.app.ShaderSlothController;
 import eu.yvka.shadersloth.app.project.Project;
 import eu.yvka.shadersloth.app.sceneEditor.PropertyEditors;
 import eu.yvka.shadersloth.share.I18N.I18N;
@@ -8,33 +9,26 @@ import eu.yvka.shadersloth.share.controller.AbstractController;
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.material.BasicMaterial;
 import eu.yvka.slothengine.material.Material;
-import eu.yvka.slothengine.material.MaterialParameter;
 import eu.yvka.slothengine.math.Color;
 import eu.yvka.slothengine.utils.NameAlreadyInUseException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
-import org.controlsfx.property.BeanProperty;
 import org.controlsfx.property.BeanPropertyUtils;
 import org.controlsfx.property.editor.DefaultPropertyEditorFactory;
-import org.controlsfx.property.editor.Editors;
 import org.controlsfx.property.editor.PropertyEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 /***
  * Controller for editing and creating materials
@@ -280,17 +274,7 @@ public class MaterialEditorController extends AbstractController {
 		return properties;
 	}
 
-	private void deleteCurrentMaterial() {
-		int currentMaterial = materialList.getSelectionModel().getSelectedIndex();
-		if (currentMaterial != -1) {
-            Material material = materialList.getItems().remove(currentMaterial);
-            Engine.materialManager().unregisterMaterial(material);
-        }
 
-		if (materialList.getItems().isEmpty()) {
-			selectedMaterial.set(null);
-		}
-	}
 
 	private void createNewMaterial() {
 		assert project != null;
@@ -313,6 +297,21 @@ public class MaterialEditorController extends AbstractController {
 		project.getMaterials().add(material);
 		materialList.getItems().add(material);
 		materialList.getSelectionModel().selectLast();
+		getRoot().fireEvent(new MaterialEvent(MaterialEvent.MATERIAL_CREATED, material));
+	}
+
+	private void deleteCurrentMaterial() {
+		int currentMaterial = materialList.getSelectionModel().getSelectedIndex();
+		if (currentMaterial != -1) {
+			Material material = materialList.getItems().remove(currentMaterial);
+			project.getMaterials().remove(material);
+			Engine.materialManager().unregisterMaterial(material);
+			getRoot().fireEvent(new MaterialEvent(MaterialEvent.MATERIAL_DELETED, material));
+		}
+
+		if (materialList.getItems().isEmpty()) {
+			selectedMaterial.set(null);
+		}
 	}
 
 	/******************************************************************************

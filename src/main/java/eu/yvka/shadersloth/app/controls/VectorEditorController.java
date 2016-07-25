@@ -1,4 +1,4 @@
-package eu.yvka.shadersloth.app.controllers;
+package eu.yvka.shadersloth.app.controls;
 
 import javafx.beans.property.FloatProperty;
 import javafx.fxml.FXML;

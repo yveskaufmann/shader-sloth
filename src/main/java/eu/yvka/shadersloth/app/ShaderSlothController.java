@@ -1,15 +1,15 @@
-package eu.yvka.shadersloth.app.controllers;
+package eu.yvka.shadersloth.app;
 
-import eu.yvka.shadersloth.app.App;
+import eu.yvka.shadersloth.app.materialEditor.MaterialEditorController;
+import eu.yvka.shadersloth.app.materialEditor.MaterialEvent;
 import eu.yvka.shadersloth.app.project.DummyProject;
 import eu.yvka.shadersloth.app.project.Project;
 import eu.yvka.shadersloth.app.sceneEditor.SceneTreeEditorController;
 import eu.yvka.shadersloth.share.I18N.I18N;
-import eu.yvka.shadersloth.app.controllers.genericEditor.GenericEditorController;
+import eu.yvka.shadersloth.app.sceneEditor.genericEditor.GenericEditorController;
 import eu.yvka.shadersloth.app.menubar.MenuBarController;
-import eu.yvka.shadersloth.app.shaders.ShaderEditor;
+import eu.yvka.shadersloth.app.materialEditor.shaders.ShaderEditor;
 import eu.yvka.shadersloth.app.renderView.RenderService;
-import eu.yvka.shadersloth.share.context.ApplicationContext;
 import eu.yvka.shadersloth.share.controller.AbstractWindowController;
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.scene.Scene;
@@ -94,10 +94,15 @@ public class ShaderSlothController extends AbstractWindowController {
 		materialEditorRoot.setContent(materialEditorController.getRoot());
 		renderService = new RenderService(renderView);
 
+		getRoot().addEventHandler(MaterialEvent.ANY, this::onMaterialChanged);
+
 		initSourceView();
 		initRenderView();
 
+
 	}
+
+
 
 
 	private void initSourceView() {
@@ -265,6 +270,18 @@ public class ShaderSlothController extends AbstractWindowController {
 	public void stop() {
 		Log.info("Stop ShaderSlothRenderer View");
 		renderService.cancel();
+	}
+
+	/******************************************************************************
+	 *
+	 * Event Handlers
+	 *
+	 ******************************************************************************/
+
+	private void onMaterialChanged(MaterialEvent event) {
+		// notify editors that the material list has changed
+		genericEditorController.refresh();
+		event.consume();
 	}
 
 	/******************************************************************************

@@ -1,15 +1,14 @@
-package eu.yvka.shadersloth.app.controllers.genericEditor;
+package eu.yvka.shadersloth.app.sceneEditor.genericEditor;
 
 import eu.yvka.shadersloth.app.App;
-import eu.yvka.shadersloth.app.controllers.ShaderSlothController;
+import eu.yvka.shadersloth.app.ShaderSlothController;
 import eu.yvka.shadersloth.app.controls.NumberInput;
+import eu.yvka.shadersloth.app.project.Project;
 import eu.yvka.shadersloth.share.controller.AbstractController;
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.material.Material;
 import eu.yvka.slothengine.math.MathUtils;
 import eu.yvka.slothengine.scene.Geometry;
-import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.SingleSelectionModel;
@@ -19,7 +18,7 @@ import org.joml.Vector3f;
 
 import java.util.Optional;
 
-public class ModelEditorController extends AbstractController {
+public class GeometryEditorController extends AbstractController {
 
 	@FXML private TextField nodeId;
 	@FXML private NumberInput xPosition;
@@ -39,7 +38,7 @@ public class ModelEditorController extends AbstractController {
 	private Optional<Geometry> selectedNode = Optional.empty();
 	private final ShaderSlothController slothController;
 
-	public ModelEditorController(ShaderSlothController controller) {
+	public GeometryEditorController(ShaderSlothController controller) {
 		super(App.class.getResource("view/modelEditor.fxml"));
 		this.slothController = controller;
 	}
@@ -103,34 +102,31 @@ public class ModelEditorController extends AbstractController {
 			}
 			@Override
 			public Material fromString(String materialName) {
-				return Engine.materialManager().getMaterial(materialName).get();
+				return null;
 			}
 		});
 
 		materialChooser.valueProperty().addListener((observable, oldMaterial, newMaterial) -> {
-			if (newMaterial == null) return;
-			selectedNode.ifPresent((node) -> node.setMaterial(newMaterial));
+			if (newMaterial == null || oldMaterial == newMaterial) return;
+			selectedNode.ifPresent((node) -> Engine.runWhenReady(() -> node.setMaterial(newMaterial)));
 		});
-
-		Engine.materialManager().getMaterial().addListener((MapChangeListener<String, Material>) change -> {
-			SingleSelectionModel<Material> selectionModel = materialChooser.getSelectionModel();
-			Material selection = selectionModel.getSelectedItem();
-			materialChooser.setItems(
-				FXCollections.observableArrayList(Engine.materialManager().getMaterial().values())
-			);
-
-			if (selection != null && materialChooser.getItems().contains(selection)) {
-				selectionModel.select(selection);
-			} else {
-				selectionModel.selectFirst();
-			}
-
-        });
-
-		materialChooser.setItems(
-			FXCollections.observableArrayList(Engine.materialManager().getMaterial().values())
-		);
 	}
+
+	private void reloadMaterials() {
+		SingleSelectionModel<Material> selectionModel = materialChooser.getSelectionModel();
+		Material selection = selectionModel.getSelectedItem();
+
+		final Material previousSelectedValue = materialChooser.getValue();
+		final Project project = slothController.getProject();
+		materialChooser.getItems().setAll(project.getMaterials());
+
+		if (selection != null && materialChooser.getItems().contains(selection)) {
+            selectionModel.select(selection);
+        } else {
+            selectionModel.selectFirst();
+        }
+	}
+
 
 	public void updateData(Geometry node) {
 
@@ -154,6 +150,7 @@ public class ModelEditorController extends AbstractController {
 		yScale.setValue(scale.y);
 		zScale.setValue(scale.z);
 
+		reloadMaterials();
 		materialChooser.setValue(node.getMaterial());
 	}
 }
