@@ -1,9 +1,7 @@
 package eu.yvka.shadersloth.app.materialEditor.shaders.errors;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import eu.yvka.slothengine.shader.source.ShaderSource;
+import javafx.beans.property.*;
 
 /**
  * @author Yves Kaufmann
@@ -20,6 +18,7 @@ public class ShaderError {
 	private StringProperty description;
 	private StringProperty shaderName;
 	private IntegerProperty lineNumber;
+	private ObjectProperty<ShaderSource> source;
 
 	/******************************************************************************
 	 *
@@ -27,16 +26,12 @@ public class ShaderError {
 	 *
 	 ******************************************************************************/
 
-	public static ShaderError fromShaderException() {
-		return new ShaderError("", "", 1);
-	};
-
-	ShaderError(String error, String name, Integer line) {
+	ShaderError(String error, String name, Integer line, ShaderSource source) {
 		description = new SimpleStringProperty(this, "description", error);
 		shaderName = new SimpleStringProperty(this, "shaderName", name);
 		lineNumber = new SimpleIntegerProperty(this, "lineNumber", line);
+		this.source = new SimpleObjectProperty<ShaderSource>(source);
 	}
-
 
 	/******************************************************************************
 	 *
@@ -78,5 +73,13 @@ public class ShaderError {
 
 	public void setLineNumber(int lineNumber) {
 		this.lineNumber.set(lineNumber);
+	}
+
+	public ShaderSource getSource() {
+		return source.get();
+	}
+
+	public ObjectProperty<ShaderSource> sourceProperty() {
+		return source;
 	}
 }

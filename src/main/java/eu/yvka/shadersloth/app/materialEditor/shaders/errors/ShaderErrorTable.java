@@ -1,5 +1,6 @@
 package eu.yvka.shadersloth.app.materialEditor.shaders.errors;
 
+import eu.yvka.slothengine.shader.Shader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -11,7 +12,7 @@ import static eu.yvka.shadersloth.share.I18N.I18N.getString;
  * @author Yves Kaufmann
  * @since 18.07.2016
  */
-public class ShaderErrorTable extends TableView {
+public class ShaderErrorTable extends TableView<ShaderError> {
 
 	public ShaderErrorTable() {
 		super();
