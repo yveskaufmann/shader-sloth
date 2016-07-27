@@ -6,47 +6,54 @@
         <format>zip</format>
     </formats>
 
-    <!-- Adds the dependencies of our application to the lib directory -->
-    <dependencySets>
-        <dependencySet>
-            <!--
-                Project artifact is not copied under library directory since
-                it is added to the root directory of the zip package.
-            -->
-            <useProjectArtifact>false</useProjectArtifact>
-            <outputDirectory>lib</outputDirectory>
-            <unpack>false</unpack>
-        </dependencySet>
-    </dependencySets>
-
     <fileSets>
         <!--
-            Adds startup scripts to the root directory of zip package. The startup
-            scripts are copied from the src/main/scripts directory.
-        -->
-        <fileSet>
-            <directory>${project.build.scriptSourceDirectory}</directory>
-            <outputDirectory/>
-            <includes>
-                <include>startup.*</include>
-            </includes>
-        </fileSet>
-        <!--
-            Adds the jar file of our example application to the root directory
-            of the created zip package.
+            Adds the source jar files of our app.
         -->
         <fileSet>
             <directory>${project.build.directory}</directory>
             <outputDirectory/>
             <includes>
-                <include>*.jar</include>
+                <include>*javadoc.jar</include>
+                <include>*sources.jar</include>
             </includes>
         </fileSet>
 
+        <!-- add native runtime environment -->
         <fileSet>
-            <directory>assets</directory>
-            <outputDirectory>assets</outputDirectory>
+            <directory>${project.build.directory}/jfx/native/${project.build.finalName}</directory>
+            <outputDirectory/>
         </fileSet>
 
+        <!-- add source -->
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <outputDirectory>source</outputDirectory>
+            <excludes>
+                <exclude>target/**</exclude>
+                <exclude>logs/**</exclude>
+                <exclude>.idea/**</exclude>
+                <exclude>*.iml</exclude>
+            </excludes>
+        </fileSet>
+
+        <!-- add info files -->
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <includes>
+                <include>README.md</include>
+                <include>LICENSE</include>
+            </includes>
+            <outputDirectory/>
+        </fileSet>
+
+        <!-- add info files -->
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <includes>
+                <include>assets/</include>
+            </includes>
+            <outputDirectory>app</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>
