@@ -38,7 +38,7 @@ public class ProjectImpl implements Project {
 
 
 	@Override
-	public void setName(String name) throws NameAlreadyInUseException {
+	public void setName(String name) {
 		final File projectFolder = new File(AppFolder.getProjectsFolder(), name);
 		this.projectFolder = projectFolder;
 		this.name = name;

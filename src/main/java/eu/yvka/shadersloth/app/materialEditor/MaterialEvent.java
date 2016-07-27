@@ -30,6 +30,13 @@ public class MaterialEvent extends Event {
 	public static final EventType<MaterialEvent> MATERIAL_CHANGED =
 		new EventType<MaterialEvent>(MaterialEvent.ANY, "MATERIAL_CHANGED");
 
+
+	/**
+	 * This event occurs when a material name is changed.
+	 */
+	public static final EventType<MaterialEvent> MATERIAL_NAME_CHANGED =
+		new EventType<MaterialEvent>(MaterialEvent.MATERIAL_CHANGED, "MATERIAL_NAME_CHANGED");
+
 	/**
 	 * This event occurs when a material is changed.
 	 */

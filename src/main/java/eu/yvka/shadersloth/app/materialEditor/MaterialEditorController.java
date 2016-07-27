@@ -2,6 +2,7 @@ package eu.yvka.shadersloth.app.materialEditor;
 
 import eu.yvka.shadersloth.app.App;
 import eu.yvka.shadersloth.app.ShaderSlothController;
+import eu.yvka.shadersloth.app.materialEditor.shaders.ShaderTemplateHelper;
 import eu.yvka.shadersloth.app.project.Project;
 import eu.yvka.shadersloth.app.sceneEditor.PropertyEditors;
 import eu.yvka.shadersloth.share.I18N.I18N;
@@ -10,6 +11,7 @@ import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.material.BasicMaterial;
 import eu.yvka.slothengine.material.Material;
 import eu.yvka.slothengine.math.Color;
+import eu.yvka.slothengine.shader.Shader;
 import eu.yvka.slothengine.utils.NameAlreadyInUseException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -85,11 +87,13 @@ public class MaterialEditorController extends AbstractController {
 					editTextField = new TextField(getItem().getMaterialName());
 					editTextField.setOnAction((event) -> {
 						String newMame = editTextField.getText();
-						String oldName = getItem().getMaterialName();
+						Material mat = getItem();
+						String oldName = mat.getMaterialName();
 						try {
-							Engine.materialManager().renameMaterial(oldName, newMame);
+							Engine.materialManager().renameMaterial(mat, newMame);
+							getRoot().fireEvent(new MaterialEvent(MaterialEvent.MATERIAL_NAME_CHANGED, mat));
 							editTextField.getStyleClass().remove("invalid");
-							commitEdit(getItem());
+							commitEdit(mat);
 						} catch (NameAlreadyInUseException e) {
 							editTextField.getStyleClass().remove("invalid");
 							editTextField.getStyleClass().add("invalid");
@@ -260,17 +264,6 @@ public class MaterialEditorController extends AbstractController {
 		}));
 
 
-
-		/*
-		material.setParameter("test", Color.Black);
-		for (MaterialParameter parameter : material.getMaterialParameters().values()) {
-			PropertyDescriptor descriptor = new PropertyDescriptor(parameter.getName(), MaterialParameter.class, "getValue", "setValue");
-			PropertySheet.Item pItem = new BeanProperty(parameter, descriptor);
-			items.add(pItem);
-		}
-
-		*/
-
 		return properties;
 	}
 
@@ -279,13 +272,15 @@ public class MaterialEditorController extends AbstractController {
 	private void createNewMaterial() {
 		assert project != null;
 
-		String name;
-		Material material = new BasicMaterial();
 
-		name = I18N.getString("material.name.template", nextMaterialNumber++);
+
+		String name = I18N.getString("material.name.template", nextMaterialNumber++);
 		while (Engine.materialManager().isMaterialNameInUse(name)) {
 			name = I18N.getString("material.name.template", nextMaterialNumber++);
 		}
+
+		Shader shader = ShaderTemplateHelper.createShader(project.getProjectFolder(), name);
+		Material material = new BasicMaterial(shader);
 		material.setMaterialName(name);
 
 		try {

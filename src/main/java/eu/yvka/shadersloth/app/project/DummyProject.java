@@ -1,5 +1,6 @@
 package eu.yvka.shadersloth.app.project;
 
+import eu.yvka.shadersloth.app.materialEditor.shaders.ShaderTemplateHelper;
 import eu.yvka.slothengine.engine.Engine;
 import eu.yvka.slothengine.geometry.primitives.Cube;
 import eu.yvka.slothengine.geometry.primitives.Sphere;
@@ -11,6 +12,8 @@ import eu.yvka.slothengine.scene.Geometry;
 import eu.yvka.slothengine.scene.Scene;
 import eu.yvka.slothengine.scene.camera.FreeCamera;
 import eu.yvka.slothengine.scene.light.PointLight;
+import eu.yvka.slothengine.shader.Shader;
+import eu.yvka.slothengine.utils.NameAlreadyInUseException;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -29,17 +32,21 @@ public class DummyProject extends ProjectImpl {
 
 	public DummyProject() {
 		super();
+
+
+		setName("dummy");
 		List<Geometry> boxes = new ArrayList<>();
 		final Scene scene = getScene();
 		Random rnd = new Random();
 		rnd.setSeed(System.nanoTime());
 
-		BasicMaterial mat = new BasicMaterial();
+		Shader dummyShader = ShaderTemplateHelper.createShader(getProjectFolder(), "Phong", true);
+		BasicMaterial mat = new BasicMaterial(dummyShader);
 		mat.getRenderState().setFrontFaceWinding(RenderState.FaceWinding.GL_CCW);
 		mat.getRenderState().setCullFaceMode(RenderState.CullFaceMode.Back);
-		mat.setParameter("sl_material.diffuse", Color.White);
-		mat.setParameter("sl_material.ambient", Color.White);
-		mat.setShininess(20.0f);
+		// mat.setParameter("sl_material.diffuse", Color.White);
+		// mat.setParameter("sl_material.ambient", Color.White);
+		// mat.setShininess(20.0f);
 		getMaterials().add(mat);
 
 		Pass pass = mat.createPass();

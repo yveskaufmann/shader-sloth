@@ -4,6 +4,7 @@ import eu.yvka.shadersloth.app.materialEditor.MaterialEditorController;
 import eu.yvka.shadersloth.app.materialEditor.MaterialEvent;
 import eu.yvka.shadersloth.app.project.DummyProject;
 import eu.yvka.shadersloth.app.project.Project;
+import eu.yvka.shadersloth.app.project.ProjectManager;
 import eu.yvka.shadersloth.app.sceneEditor.SceneTreeEditorController;
 import eu.yvka.shadersloth.share.I18N.I18N;
 import eu.yvka.shadersloth.app.sceneEditor.genericEditor.GenericEditorController;
@@ -12,6 +13,7 @@ import eu.yvka.shadersloth.app.materialEditor.shaders.ShaderEditor;
 import eu.yvka.shadersloth.app.renderView.RenderService;
 import eu.yvka.shadersloth.share.controller.AbstractWindowController;
 import eu.yvka.slothengine.engine.Engine;
+import eu.yvka.slothengine.material.Material;
 import eu.yvka.slothengine.scene.Scene;
 import eu.yvka.slothengine.shader.source.ShaderSource;
 import javafx.application.Platform;
@@ -27,6 +29,7 @@ import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import java.io.File;
 
 public class ShaderSlothController extends AbstractWindowController {
@@ -68,7 +71,9 @@ public class ShaderSlothController extends AbstractWindowController {
 	private GenericEditorController genericEditorController = new GenericEditorController(this);
 	private MaterialEditorController materialEditorController = new MaterialEditorController(this);
 	private RenderService renderService;
-	private ObjectProperty<Project> currentProject;
+
+	@Inject
+	private ProjectManager projectManager;
 
 	/******************************************************************************
 	 *
@@ -107,19 +112,23 @@ public class ShaderSlothController extends AbstractWindowController {
 
 	private void initSourceView() {
 		materialEditorController.selectedMaterialProperty().addListener((observable, oldValue, newValue) -> {
-			sourceTabs.getTabs().clear();
-			if (newValue != null) {
-				for (ShaderSource source : newValue.getShader().getShaderSources()) {
-					final File file = new File(source.getName());
-					Tab tab = new Tab(file.getName());
-					ShaderEditor shaderEditor = new ShaderEditor(source);
-					tab.setContent(shaderEditor);
-					sourceTabs.getTabs().add(tab);
-				}
-
-			}
+			updateShaderEditor(newValue);
         });
 		sourceTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+	}
+
+	private void updateShaderEditor(Material newValue) {
+		sourceTabs.getTabs().clear();
+		if (newValue != null) {
+            for (ShaderSource source : newValue.getShader().getShaderSources()) {
+                final File file = new File(source.getName());
+                Tab tab = new Tab(file.getName());
+                ShaderEditor shaderEditor = new ShaderEditor(source);
+                tab.setContent(shaderEditor);
+                sourceTabs.getTabs().add(tab);
+            }
+
+        }
 	}
 
 	@Override
@@ -176,14 +185,16 @@ public class ShaderSlothController extends AbstractWindowController {
 	}
 
 	private void performNewProject() {
-		if (currentProject != null) {
+		if (getProject() != null) {
 			// TODO: request for save
 		}
 
-		final Project newProject = new DummyProject();
-		setProject(newProject);
-		renderService.setScene(newProject.getScene());
-		loadProject(getProject());
+		final Project newProject = projectManager.createNewProject();
+		if (newProject != null) {
+			projectManager.setCurrentProject(newProject);
+			renderService.setScene(newProject.getScene());
+			loadProject(getProject());
+		}
 	}
 
 	private void loadProject(Project project) {
@@ -256,6 +267,11 @@ public class ShaderSlothController extends AbstractWindowController {
 	public void start() {
 		Log.info("Start ShaderSlothRenderer View");
 		renderService.start();
+		// we can only start a project
+		// when the engine is already running
+		// and we have to make sure that the
+		// performNewProject is performed on
+		// the javafx thread.
 		Engine.runWhenReady(() -> {
 			Platform.runLater(() -> {
 				performNewProject();
@@ -281,6 +297,11 @@ public class ShaderSlothController extends AbstractWindowController {
 	private void onMaterialChanged(MaterialEvent event) {
 		// notify editors that the material list has changed
 		genericEditorController.refresh();
+
+		if (event.getEventType().equals(MaterialEvent.MATERIAL_NAME_CHANGED)) {
+			updateShaderEditor(event.getAffectedMaterial());
+		}
+
 		event.consume();
 	}
 
@@ -342,34 +363,12 @@ public class ShaderSlothController extends AbstractWindowController {
 
 
 	/**
-	 * This property provides the currently active project.
-	 *
-	 * @return the property which contains the current project.
-	 */
-	public ObjectProperty<Project> currentProjectProperty() {
-		if (currentProject == null) {
-			currentProject = new SimpleObjectProperty<>(this, "currentProject");
-		}
-		return currentProject;
-	}
-
-	/**
 	 * Retrieves the current project
 	 *
 	 * @return the current project
      */
 	public Project getProject() {
-		return currentProject == null ? null : currentProject.get();
+		return projectManager.getCurrentProject();
 	}
-
-	/**
-	 * Specifies the current project.
-	 *
-	 * @param project the project which should be loaded
-     */
-	public void setProject(Project project) {
-		currentProjectProperty().set(project);
-	}
-
 
 }

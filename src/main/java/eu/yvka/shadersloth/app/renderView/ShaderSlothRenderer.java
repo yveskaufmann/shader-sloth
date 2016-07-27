@@ -41,7 +41,7 @@ public class ShaderSlothRenderer extends EngineApp implements InputListener {
 
 	@Override
 	protected void prepare() {
-		zoomLevel = 1.0f;
+		zoomLevel = 0.5f;
 		inputManager.addListener(this);
 	}
 

@@ -9,6 +9,7 @@ import com.google.inject.spi.InjectionListener;
 import com.google.inject.spi.TypeEncounter;
 import com.google.inject.spi.TypeListener;
 import eu.yvka.shadersloth.app.preferences.GlobalUserPreferences;
+import eu.yvka.shadersloth.app.project.ProjectManager;
 import eu.yvka.shadersloth.share.utils.ReflectionUtils;
 import eu.yvka.shadersloth.share.controller.AbstractController;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ public class ShaderSlothModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
+		bind(ProjectManager.class).asEagerSingleton();
 		ensurePostConstructIsInvoked();
 	}
 

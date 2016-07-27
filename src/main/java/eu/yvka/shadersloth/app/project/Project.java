@@ -17,7 +17,7 @@ import java.util.List;
 public interface Project {
 
 	String getName();
-	void setName(String name) throws NameAlreadyInUseException;
+	void setName(String name);
 
 	File getProjectFolder();
 
