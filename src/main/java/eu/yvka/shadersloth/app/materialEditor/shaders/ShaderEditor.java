@@ -19,31 +19,14 @@ import java.util.regex.Pattern;
 import static javafx.scene.input.KeyCombination.CONTROL_DOWN;
 import static org.fxmisc.wellbehaved.event.EventPattern.keyPressed;
 
+/**
+ * A simple text editor for editing shader files.
+ */
 public class ShaderEditor extends CodeArea {
 
-	private static final String EXAMPLE_CODE = "#version 130\n" +
-		"\n" +
-		"in vec3 fragmentColor;\n" +
-		"out vec4 fragColor;\n" +
-		"\n" +
-		"uniform int isWireframe;\n" +
-		"\n" +
-		"void main() {\n" +
-		"\t// Output color = color specified in the vertex core.shader, \n" +
-		"\t// interpolated between all 3 surrounding vertices\n" +
-		"\n" +
-		"\tvec3 color = vec3(fragmentColor.r * 0.5);\n" +
-		"\n" +
-		"\tif (isWireframe == 1) {\n" +
-		"\t    color = 1.0 - vec3(0.1, 0.1, 0.1);\n" +
-		"\t}\n" +
-		"\n" +
-		"\tfragColor = vec4(color, 1.0f);\n" +
-		"\n" +
-		"}\n";
 
 
-	private static final Pattern GLSL_KEY_WORD = Pattern.compile("(?<TYPE>int|float|vec[234]|mat[234])");
+	private static final Pattern GLSL_KEY_WORD = Pattern.compile("(?<TYPE>\\b(?:int|float|vec[234]|mat[234]|void)\\b)");
 	private static final int TYPE_GROUP = 1 ;
 	private AutoCompletePopup<String> autoCompletePopup;
 
@@ -132,6 +115,5 @@ public class ShaderEditor extends CodeArea {
 		}
 		return source;
 	}
-
 
 }
